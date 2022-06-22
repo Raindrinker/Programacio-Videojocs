@@ -19,24 +19,29 @@ const char* fragmentShaderSource = "#version 330 core\n"
 "}\n\0";
 
 // Vertices coordinates
-GLfloat equilateral_triangle[] =
+GLfloat vertices[] =
 {
 	-0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower left corner
 	0.5f, -0.5f * float(sqrt(3)) / 3, 0.0f, // Lower right corner
-	0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f // Upper corner
+	0.0f, 0.5f * float(sqrt(3)) * 2 / 3, 0.0f, // Upper corner
+	-0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f, // Inner left
+	0.5f / 2, 0.5f * float(sqrt(3)) / 6, 0.0f, // Inner right
+	0.0f, -0.5f * float(sqrt(3)) / 3, 0.0f // Inner down
 };
 
-GLfloat right_triangle[] =
+// Indices for vertices order
+GLuint indices[] =
 {
-	-0.5f, -0.5f, 0.0f, // Lower left corner
-	0.5f, -0.5f, 0.0f, // Lower right corner
-	0.5f, 0.5f, 0.0f // Upper corner
+	0, 3, 5, // Lower left triangle
+	3, 2, 4, // Lower right triangle
+	5, 4, 1 // Upper triangle
 };
 
 GLFWwindow* window; // Game window
 GLuint shaderProgram; // Shader program
 GLuint VAO; //Array of VBOs that store the information of a complete rendered object
-GLuint VBO; //Memory buffer tha tholds informationa bout vertices
+GLuint VBO; //Memory buffer that holds informationa bout vertices
+GLuint EBO; //Index buffer that stores indices for reusing vertices
 
 void SetupGLFW() {
 
@@ -94,22 +99,27 @@ void SetupShaders() {
 	glDeleteShader(fragmentShader);
 }
 
-void SetupVertexData(GLfloat data[], int len) {
+void SetupVertexData(GLfloat vert[], GLuint inds[], int len_verts, int len_inds) {
 
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
+	glGenBuffers(1, &EBO);
 
 	glBindVertexArray(VAO);
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
 
-	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * len, data, GL_STATIC_DRAW);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(GLfloat) * len_verts, vert, GL_STATIC_DRAW);
+
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(GLuint) * len_inds, inds, GL_STATIC_DRAW);
 
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
 }
 
 int main() {
@@ -122,7 +132,7 @@ int main() {
 
 	SetupShaders();
 
-	SetupVertexData(equilateral_triangle, 9);
+	SetupVertexData(vertices, indices, 18, 9);
 
 	glClearColor(0.07f, 0.13f, 0.17f, 1.0f); //Clear back buffer with blue
 	glClear(GL_COLOR_BUFFER_BIT);
@@ -137,7 +147,7 @@ int main() {
 		glUseProgram(shaderProgram); //Select shader program
 		glBindVertexArray(VAO); // Bind VAO to use
 
-		glDrawArrays(GL_TRIANGLES, 0, 3); //Interpret the information in the VAO as triangles, starting at index 0, and drawing 3 vertices.
+		glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0); //Interpret the information in the VAO as triangles, starting at index 0, and drawing 9 elements.
 
 		glfwSwapBuffers(window); //Swap buffers
 
