@@ -33,3 +33,6 @@
 
 # VisualStudio
 .vs
+
+# Debug
+**/Debug/*
