@@ -5,12 +5,16 @@
 #include <ctime>
 #include <chrono>
 #include <stb/stb_image.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 
-#include "shaderClass.h"
+#include "Shader.h"
 #include "VBO.h"
 #include "VAO.h"
 #include "EBO.h"
 #include "Texture.h"
+#include "SpriteRenderer.h"
 
 using std::cout; using std::endl;
 using std::chrono::duration_cast;
@@ -18,28 +22,14 @@ using std::chrono::milliseconds;
 using std::chrono::seconds;
 using std::chrono::system_clock;
 
-
-// Vertices coordinates
-GLfloat vertices[] =
-{ //     COORDINATES     /        COLORS      /   TexCoord  //
-	-0.5f, -0.5f, 0.0f,     1.0f, 0.0f, 0.0f,	0.0f, 0.0f, // Lower left corner
-	-0.5f,  0.5f, 0.0f,     0.0f, 1.0f, 0.0f,	0.0f, 1.0f, // Upper left corner
-	 0.5f,  0.5f, 0.0f,     0.0f, 0.0f, 1.0f,	1.0f, 1.0f, // Upper right corner
-	 0.5f, -0.5f, 0.0f,     1.0f, 1.0f, 1.0f,	1.0f, 0.0f  // Lower right corner
-};
-
-// Indices for vertices order
-GLuint indices[] =
-{
-	0, 2, 1, // Upper triangle
-	0, 3, 2 // Lower triangle
-};
-
-
 GLFWwindow* window; // Game window
+const unsigned int width = 800;
+const unsigned int height = 800;
 
 float t = 0;
 time_t current_time;
+
+SpriteRenderer sr = SpriteRenderer();
 
 void SetupGLFW() {
 
@@ -67,7 +57,7 @@ bool SetupWindow() {
 
 	//Load GLAD and specify the viewport
 	gladLoadGL();
-	glViewport(0, 0, 800, 800);
+	glViewport(0, 0, width, height);
 
 	return true;
 }
@@ -80,34 +70,12 @@ int main() {
 		return -1;
 	}
 
-	Shader shaderProgram = Shader("default.vert", "default.frag");
+	sr.Init();
 
-	// Generates Vertex Array Object and binds it
-	VAO VAO1 = VAO();
-	VAO1.Bind();
+	Texture tex = Texture("science_dog.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
 
-	// Generates Vertex Buffer Object and links it to vertices
-	VBO VBO1 = VBO(vertices, sizeof(vertices));
-	// Generates Element Buffer Object and links it to indices
-	EBO EBO1 = EBO(indices, sizeof(indices));
-
-	// Links VBO to VAO
-	VAO1.LinkAttrib(VBO1, 0, 3, GL_FLOAT, 8 * sizeof(float), (void*)0);
-	VAO1.LinkAttrib(VBO1, 1, 3, GL_FLOAT, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	VAO1.LinkAttrib(VBO1, 2, 2, GL_FLOAT, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	// Unbind all to prevent accidentally modifying them
-	VAO1.Unbind();
-	VBO1.Unbind();
-	EBO1.Unbind();
-
-	// Uniforms
-	GLuint scale_uni = glGetUniformLocation(shaderProgram.ID, "scale");
-	GLuint tint_uni = glGetUniformLocation(shaderProgram.ID, "tint");
-	GLuint tex0_uni = glGetUniformLocation(shaderProgram.ID, "tex0");
-
-	// Texture
-	Texture scienceDog("science_dog.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-	scienceDog.texUnit(shaderProgram, "tex0", 0);
+	glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width),
+		static_cast<float>(height), 0.0f, -1.0f, 1.0f);
 
 	//Program core loop
 	while (!glfwWindowShouldClose(window)) {
@@ -116,14 +84,9 @@ int main() {
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
-		// Tell OpenGL which Shader Program we want to use
-		shaderProgram.Activate();
-		// Binds texture so that is appears in rendering
-		scienceDog.Bind();
-		// Bind the VAO so OpenGL knows to use it
-		VAO1.Bind();
 
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); //Interpret the information in the VAO as triangles, starting at index 0, and drawing 9 elements.
+		//sr.DrawSprite(tex, projection, glm::vec2(300.0f, 0.0f), glm::vec2(512, 512));
+		sr.DrawSprite(tex, projection, glm::vec2(400.0f, 400.0f), tex.GetSize());
 
 		glfwSwapBuffers(window); //Swap buffers
 
@@ -132,13 +95,10 @@ int main() {
 	}
 
 	// Cleanup
-	VAO1.Delete();
-	VBO1.Delete();
-	EBO1.Delete();
 
-	scienceDog.Delete();
+	tex.Delete();
 
-	shaderProgram.Delete();
+	sr.Delete();
 
 	glfwDestroyWindow(window);
 	glfwTerminate();

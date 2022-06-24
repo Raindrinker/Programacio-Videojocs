@@ -1,7 +1,10 @@
-#ifndef SHADER_CLASS_H
-#define SHADER_CLASS_H
+#ifndef SHADER_H
+#define SHADER_H
 
 #include<glad/glad.h>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
+#include <glm/gtc/type_ptr.hpp>
 #include<string>
 #include<fstream>
 #include<sstream>
@@ -18,6 +21,10 @@ class Shader
 
 		void Activate();
 		void Delete();
+
+		void SetMatrix4(const char* name, glm::mat4 data);
+		void SetVector3f(const char* name, glm::vec3 data);
+
 
 };
 

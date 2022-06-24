@@ -5,8 +5,6 @@ Texture::Texture(const char* image, GLenum texType, GLenum slot, GLenum format, 
 	// Assigns the type of the texture ot the texture object
 	type = texType;
 
-	// Stores the width, height, and the number of color channels of the image
-	int widthImg, heightImg, numColCh;
 	// Flips the image so it appears right side up
 	stbi_set_flip_vertically_on_load(true);
 	// Reads the image from a file and stores it in bytes
@@ -65,4 +63,9 @@ void Texture::Unbind()
 void Texture::Delete()
 {
 	glDeleteTextures(1, &ID);
+}
+
+glm::vec2 Texture::GetSize() 
+{
+	return glm::vec2(widthImg, heightImg);
 }

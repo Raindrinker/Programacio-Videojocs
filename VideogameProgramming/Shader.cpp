@@ -1,4 +1,4 @@
-#include "shaderClass.h"
+#include "Shader.h"
 
 // Reads a text file and outputs a string with everything in the text file
 std::string get_file_contents(const char* filename)
@@ -66,4 +66,16 @@ void Shader::Activate()
 void Shader::Delete()
 {
 	glDeleteProgram(ID);
+}
+
+void Shader::SetMatrix4(const char* name, glm::mat4 data) {
+
+	int loc = glGetUniformLocation(ID, name);
+	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(data));
+
+}
+void Shader::SetVector3f(const char* name, glm::vec3 data) {
+
+	int loc = glGetUniformLocation(ID, name);
+	glUniform3fv(loc, 1, glm::value_ptr(data));
 }

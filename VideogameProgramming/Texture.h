@@ -3,8 +3,9 @@
 
 #include<glad/glad.h>
 #include<stb/stb_image.h>
+#include <glm/glm.hpp>
 
-#include"shaderClass.h"
+#include"Shader.h"
 
 class Texture
 {
@@ -21,5 +22,12 @@ public:
 	void Unbind();
 	// Deletes a texture
 	void Delete();
+
+	glm::vec2 GetSize();
+
+private:
+	int widthImg = 0;
+	int heightImg = 0;
+	int numColCh = 0;
 };
 #endif
