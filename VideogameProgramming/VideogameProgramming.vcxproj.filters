@@ -16,6 +16,9 @@
     <Filter Include="Archivos de recursos\Shaders">
       <UniqueIdentifier>{e004d031-4dd4-4dd7-8321-ed0d0c725126}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de recursos\Textures">
+      <UniqueIdentifier>{9b352467-9cd3-4be2-961b-c26aca6d6cb5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -34,6 +37,9 @@
       <Filter>Archivos de origen</Filter>
     </ClCompile>
     <ClCompile Include="VAO.cpp">
+      <Filter>Archivos de origen</Filter>
+    </ClCompile>
+    <ClCompile Include="stb.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
@@ -58,5 +64,10 @@
     <ClInclude Include="VAO.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="science_dog.png">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
   </ItemGroup>
 </Project>
