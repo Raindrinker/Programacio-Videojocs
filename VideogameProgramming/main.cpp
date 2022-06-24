@@ -10,6 +10,7 @@
 #include "VBO.h"
 #include "VAO.h"
 #include "EBO.h"
+#include "Texture.h"
 
 using std::cout; using std::endl;
 using std::chrono::duration_cast;
@@ -105,54 +106,21 @@ int main() {
 	GLuint tex0_uni = glGetUniformLocation(shaderProgram.ID, "tex0");
 
 	// Texture
-	int widthImg, heightImg, numColCh;
-	stbi_set_flip_vertically_on_load(true);
-	unsigned char* bytes = stbi_load("science_dog.png", &widthImg, &heightImg, &numColCh, 0);
-
-	GLuint texture;
-	glGenTextures(1, &texture);
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, texture);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
-
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
-	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
-
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, widthImg, heightImg, 0, GL_RGBA, GL_UNSIGNED_BYTE, bytes);
-	glGenerateMipmap(GL_TEXTURE_2D);
-
-	stbi_image_free(bytes);
-	glBindTexture(GL_TEXTURE_2D, 0);
-
-	glClearColor(0.07f, 0.13f, 0.17f, 1.0f); //Clear back buffer with blue
-	glClear(GL_COLOR_BUFFER_BIT);
-	glfwSwapBuffers(window); //Swap buffers
-
-	float t = 0;
-	float time = clock();
-
-	shaderProgram.Activate();
-	glUniform1i(tex0_uni, 0);
+	Texture scienceDog("science_dog.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+	scienceDog.texUnit(shaderProgram, "tex0", 0);
 
 	//Program core loop
 	while (!glfwWindowShouldClose(window)) {
 
-		glClearColor(0.07f, 0.13f, 0.17f, 1.0f); //Clear back buffer with blue
+		// Specify the color of the background
+		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
+		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
-
+		// Tell OpenGL which Shader Program we want to use
 		shaderProgram.Activate();
-
-		glBindTexture(GL_TEXTURE_2D, texture);
-
-		t += clock() - time;
-		time = clock();
-
-		std::cout << time << std::endl;
-
-		float osc = (sin(t / 1000) / 2) + 0.5f; //Value between 0 and 1
-
+		// Binds texture so that is appears in rendering
+		scienceDog.Bind();
+		// Bind the VAO so OpenGL knows to use it
 		VAO1.Bind();
 
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0); //Interpret the information in the VAO as triangles, starting at index 0, and drawing 9 elements.
@@ -168,7 +136,7 @@ int main() {
 	VBO1.Delete();
 	EBO1.Delete();
 
-	glDeleteTextures(1, &texture);
+	scienceDog.Delete();
 
 	shaderProgram.Delete();
 
