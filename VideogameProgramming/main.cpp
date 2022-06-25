@@ -85,8 +85,8 @@ int main() {
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		//sr.DrawSprite(tex, projection, glm::vec2(300.0f, 0.0f), glm::vec2(512, 512));
-		sr.DrawSprite(tex, projection, glm::vec2(400.0f, 400.0f), tex.GetSize());
+		sr.DrawSprite(tex, projection, glm::vec2(200.0f, 200.0f), tex.GetSize());
+		sr.DrawSprite(tex, projection, glm::vec2(600.0f, 600.0f), tex.GetSize());
 
 		glfwSwapBuffers(window); //Swap buffers
 
