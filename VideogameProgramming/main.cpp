@@ -15,12 +15,20 @@
 #include "EBO.h"
 #include "Texture.h"
 #include "SpriteRenderer.h"
+#include "RenderSystem.h"
+#include "ScriptManager.h"
+#include "BallScript.h"
+#include "Script.h"
 
-using std::cout; using std::endl;
+#include "ECS.h"
+
+using std::cout; 
+using std::endl;
 using std::chrono::duration_cast;
 using std::chrono::milliseconds;
 using std::chrono::seconds;
 using std::chrono::system_clock;
+using namespace ECS;
 
 GLFWwindow* window; // Game window
 const unsigned int width = 800;
@@ -29,7 +37,9 @@ const unsigned int height = 800;
 float t = 0;
 time_t current_time;
 
-SpriteRenderer sr = SpriteRenderer();
+World* world;
+ScriptManager scriptManager;
+
 
 void SetupGLFW() {
 
@@ -59,7 +69,31 @@ bool SetupWindow() {
 	gladLoadGL();
 	glViewport(0, 0, width, height);
 
+	glEnable(GL_BLEND);
+	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+
 	return true;
+}
+
+Entity* CreateEntity(glm::vec2 position, float rotation, float scale, const char* filepath, glm::vec3 color) {
+	Entity* ent = world->create();
+	ent->assign<Transform>(position, rotation, scale);
+	ent->assign<Sprite>(filepath, color);
+
+	return ent;
+}
+
+void SetupWorld() {
+
+	world = World::createWorld();
+	world->registerSystem(new RenderSystem(width, height));
+
+	Entity* paddle_ent = CreateEntity(glm::vec2(400.f, 700.f), 0.f, 1.f, "Textures/button_yellow.png", glm::vec3(1., 1., 1.));
+
+	Entity* ball_ent = CreateEntity(glm::vec2(400.f, 400.f), 0.f, 1.f, "Textures/ball_blue_small.png", glm::vec3(1., 1., 1.));
+
+	BallScript* script = new BallScript(ball_ent);
+	scriptManager.AddScript(script);
 }
 
 int main() {
@@ -70,12 +104,10 @@ int main() {
 		return -1;
 	}
 
-	sr.Init();
+	SetupWorld();
 
-	Texture tex = Texture("science_dog.png", GL_TEXTURE_2D, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
-
-	glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width),
-		static_cast<float>(height), 0.0f, -1.0f, 1.0f);
+	float dt = 0;
+	float time = clock();
 
 	//Program core loop
 	while (!glfwWindowShouldClose(window)) {
@@ -86,7 +118,17 @@ int main() {
 		glClear(GL_COLOR_BUFFER_BIT);
 
 		//sr.DrawSprite(tex, projection, glm::vec2(300.0f, 0.0f), glm::vec2(512, 512));
-		sr.DrawSprite(tex, projection, glm::vec2(400.0f, 400.0f), tex.GetSize());
+		//sr.DrawSprite(texBall, projection, glm::vec2(400.0f, 400.0f), texBall.GetSize());
+
+		dt = clock() - time;
+		time = clock();
+		if (dt < 50) {
+			world->tick(dt);
+			scriptManager.tick(dt);
+		}
+
+		std::cout << "tick" << std::endl;
+		std::cout << dt << std::endl;
 
 		glfwSwapBuffers(window); //Swap buffers
 
@@ -96,12 +138,10 @@ int main() {
 
 	// Cleanup
 
-	tex.Delete();
-
-	sr.Delete();
-
 	glfwDestroyWindow(window);
 	glfwTerminate();
+
+	world->destroyWorld();
 
 	return 0;
 }

@@ -18,6 +18,7 @@ GLuint indices[] =
 
 SpriteRenderer::SpriteRenderer() 
 {
+    Init();
 }
 
 void SpriteRenderer::Init()
