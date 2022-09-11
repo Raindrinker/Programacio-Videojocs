@@ -18,6 +18,8 @@
 #include "RenderSystem.h"
 #include "ScriptManager.h"
 #include "BallScript.h"
+#include "PaddleScript.h"
+#include "BlockScript.h"
 #include "Script.h"
 
 #include "ECS.h"
@@ -75,10 +77,11 @@ bool SetupWindow() {
 	return true;
 }
 
-Entity* CreateEntity(glm::vec2 position, float rotation, float scale, const char* filepath, glm::vec3 color) {
+Entity* CreateEntity(glm::vec2 position, float rotation, float scale, const char* filepath, glm::vec3 color, 
+	bool autoSize = true, glm::vec2 size = glm::vec2(1.0, 1.0), const char* shaderName = "default") {
 	Entity* ent = world->create();
 	ent->assign<Transform>(position, rotation, scale);
-	ent->assign<Sprite>(filepath, color);
+	ent->assign<Sprite>(filepath, color, autoSize, size, shaderName);
 
 	return ent;
 }
@@ -88,12 +91,30 @@ void SetupWorld() {
 	world = World::createWorld();
 	world->registerSystem(new RenderSystem(width, height));
 
+	Entity* bg_ent = CreateEntity(glm::vec2(400.f, 400.f), 0.f, 1.f, "Textures/background_brown.png", glm::vec3(1., 1., 1.), false, glm::vec2(width, height), "repeating");
+
 	Entity* paddle_ent = CreateEntity(glm::vec2(400.f, 700.f), 0.f, 1.f, "Textures/button_yellow.png", glm::vec3(1., 1., 1.));
+	paddle_ent->assign<BoxCollider>(128.f, 53.f);
 
-	Entity* ball_ent = CreateEntity(glm::vec2(400.f, 400.f), 0.f, 1.f, "Textures/ball_blue_small.png", glm::vec3(1., 1., 1.));
+	Entity* ball_ent = CreateEntity(glm::vec2(400.f, 300.f), 0.f, 1.f, "Textures/ball_blue_small.png", glm::vec3(1., 1., 1.));
+	ball_ent->assign<BoxCollider>(32.f, 32.f);
 
-	BallScript* script = new BallScript(ball_ent);
-	scriptManager.AddScript(script);
+	BallScript* ball_script = new BallScript(window, world, ball_ent);
+	scriptManager.AddScript(ball_script);
+
+	PaddleScript* paddle_script = new PaddleScript(window, world, paddle_ent);
+	scriptManager.AddScript(paddle_script);
+
+	for (int i = 0; i < 5; i++) {
+		for (int j = 0; j < 3; j++) {
+			Entity* block_ent = CreateEntity(glm::vec2(140.f + 128.f * i, 100.f + 53.f * j), 0.f, 1.f, "Textures/button_blue.png", glm::vec3(1., 1., 1.));
+			block_ent->assign<BoxCollider>(128.f, 53.f);
+
+			BlockScript* block_script = new BlockScript(window, world, block_ent);
+			scriptManager.AddScript(block_script);
+		}
+	}
+	
 }
 
 int main() {

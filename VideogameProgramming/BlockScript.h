@@ -4,15 +4,17 @@
 
 using namespace std;
 
-class PaddleScript : public Script
+class BlockScript : public Script
 {
 
     using Script::Script;
 
 public:
 
-    void startScript() override;
-
     void tickScript(float deltaTime) override;
+
+private:
+    int hp = 1;
+    bool destroyed = false;
 
 };
