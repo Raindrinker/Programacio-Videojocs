@@ -23,7 +23,9 @@ SpriteRenderer::SpriteRenderer()
 
 void SpriteRenderer::Init()
 {
-    shader = std::make_shared<Shader>("default.vert", "default.frag");
+    shaderDefault = std::make_shared<Shader>("default.vert", "default.frag");
+    shaderInverted = std::make_shared<Shader>("default.vert", "inverted.frag");
+    shaderRepeating = std::make_shared<Shader>("default.vert", "repeating.frag");
 
     // Generates Vertex Array Object and binds it
     vao = std::make_shared<VAO>();
@@ -44,8 +46,16 @@ void SpriteRenderer::Init()
 }
 
 void SpriteRenderer::DrawSprite(Texture& texture, glm::mat4 proj, glm::vec2 position,
-    glm::vec2 size, float rotate, glm::vec3 color)
+    glm::vec2 size, float rotate, glm::vec3 color, string shaderName)
 {
+    std::shared_ptr<Shader> shader = shaderDefault;
+    if (shaderName == "inverted") {
+        shader = shaderInverted;
+    }
+    if (shaderName == "repeating") {
+        shader = shaderRepeating;
+    }
+    
     // prepare transformations
     shader->Activate();
     glm::mat4 model = glm::mat4(1.0f);
@@ -74,5 +84,6 @@ void SpriteRenderer::Delete() {
     vbo->Delete();
     ebo->Delete();
 
-    shader->Delete();
+    shaderDefault->Delete();
+    shaderInverted->Delete();
 }

@@ -1,7 +1,8 @@
 #pragma once
 
 #include<iostream>
-#include <glm/glm.hpp>
+#include<GLFW/glfw3.h>
+#include<glm/glm.hpp>
 
 #include "ECS.h"
 #include "Components.h"
@@ -13,7 +14,7 @@ class Script
 {
 public:
 
-    Script(Entity* entity);
+    Script(GLFWwindow* window, World* world,  Entity* entity);
 
     virtual void startScript();
     
@@ -21,5 +22,6 @@ public:
 
 protected:
     Entity* entity;
-
+    GLFWwindow* window;
+    World* world;
 };

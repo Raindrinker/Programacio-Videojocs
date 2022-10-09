@@ -1,7 +1,5 @@
 #pragma once
 
-#include<iostream>
-
 #include "Script.h"
 
 using namespace std;
@@ -18,6 +16,8 @@ public:
     void tickScript(float deltaTime) override;
 
 private:
+    void CheckCollisions();
+
     glm::vec2 currDir = glm::vec2(0., 1.);
     glm::vec2 limits = glm::vec2(800., 800.);
 

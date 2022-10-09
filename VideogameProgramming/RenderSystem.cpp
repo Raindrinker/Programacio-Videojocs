@@ -15,8 +15,13 @@ void RenderSystem::tick(World* world, float deltaTime)
         ComponentHandle<Transform> transform = ent->get<Transform>();
 
         Texture texture = textureManager.GetTexture(sprite->filepath);
-            
-        sr.DrawSprite(texture, projection, transform->position, texture.GetSize());
+           
+        if (sprite->autoSize) {
+            sr.DrawSprite(texture, projection, transform->position, texture.GetSize(), transform->rotation, sprite->color, sprite->shaderName);
+        }
+        else {
+            sr.DrawSprite(texture, projection, transform->position, sprite->size, transform->rotation, sprite->color, sprite->shaderName);
+        }
 
     });
 }

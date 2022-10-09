@@ -90,7 +90,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLFW_INCLUDE_NONE</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -119,7 +119,7 @@
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>GLFW_INCLUDE_NONE</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
     </ClCompile>
     <Link>
@@ -145,9 +145,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BlockScript.cpp" />
+    <ClCompile Include="Components.cpp" />
     <ClCompile Include="EBO.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="PaddleScript.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="ScriptManager.cpp" />
@@ -163,12 +166,16 @@
   <ItemGroup>
     <None Include="default.frag" />
     <None Include="default.vert" />
+    <None Include="inverted.frag" />
+    <None Include="repeating.frag" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BallScript.h" />
+    <ClInclude Include="BlockScript.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Components.h" />
+    <ClInclude Include="PaddleScript.h" />
     <ClInclude Include="ScriptManager.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Script.h" />
@@ -182,6 +189,7 @@
   <ItemGroup>
     <Image Include="Textures\background_brown.png" />
     <Image Include="Textures\ball_blue_small.png" />
+    <Image Include="Textures\button_blue.png" />
     <Image Include="Textures\button_yellow.png" />
     <Image Include="Textures\science_dog.png" />
   </ItemGroup>

@@ -12,7 +12,7 @@ uniform vec3 tint = vec3(1.0, 1.0, 1.0);
 void main()
 {
     vec4 texColor = texture(tex0, TexCoords);
-    FragColor = vec4(texColor.r, texColor.g, texColor.b, texColor.a);
+    FragColor = vec4(1 - texColor.r, 1 - texColor.g, 1 - texColor.b, texColor.a);
 
    //FragColor = vec4(TexCoords, 0.0f, 1.0f);
    //FragColor = vec4(color, 1.0f);
