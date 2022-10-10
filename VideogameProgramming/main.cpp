@@ -16,6 +16,7 @@
 #include "Texture.h"
 #include "SpriteRenderer.h"
 #include "RenderSystem.h"
+#include "ScriptSystem.h"
 #include "ScriptManager.h"
 #include "BallScript.h"
 #include "PaddleScript.h"
@@ -40,8 +41,6 @@ float t = 0;
 time_t current_time;
 
 World* world;
-ScriptManager scriptManager;
-
 
 void SetupGLFW() {
 
@@ -88,8 +87,14 @@ Entity* CreateEntity(glm::vec2 position, float rotation, float scale, const char
 
 void SetupWorld() {
 
+	cout << "World" << endl;
+
 	world = World::createWorld();
 	world->registerSystem(new RenderSystem(width, height));
+	ScriptSystem* scriptSystem = new ScriptSystem();
+	world->registerSystem(scriptSystem);
+
+	ScriptManager* scriptManager = scriptSystem->getScriptManager();
 
 	Entity* bg_ent = CreateEntity(glm::vec2(400.f, 400.f), 0.f, 1.f, "Textures/background_brown.png", glm::vec3(1., 1., 1.), false, glm::vec2(width, height), "repeating");
 
@@ -100,10 +105,12 @@ void SetupWorld() {
 	ball_ent->assign<BoxCollider>(32.f, 32.f);
 
 	BallScript* ball_script = new BallScript(window, world, ball_ent);
-	scriptManager.AddScript(ball_script);
+	ball_ent->assign<ScriptComponent>(scriptManager->AddScript(ball_script));
+
+	scriptManager->tickScript(0, 0);
 
 	PaddleScript* paddle_script = new PaddleScript(window, world, paddle_ent);
-	scriptManager.AddScript(paddle_script);
+	paddle_ent->assign<ScriptComponent>(scriptManager->AddScript(paddle_script));
 
 	for (int i = 0; i < 5; i++) {
 		for (int j = 0; j < 3; j++) {
@@ -111,7 +118,7 @@ void SetupWorld() {
 			block_ent->assign<BoxCollider>(128.f, 53.f);
 
 			BlockScript* block_script = new BlockScript(window, world, block_ent);
-			scriptManager.AddScript(block_script);
+			block_ent->assign<ScriptComponent>(scriptManager->AddScript(block_script));
 		}
 	}
 	
@@ -138,14 +145,10 @@ int main() {
 		// Clean the back buffer and assign the new color to it
 		glClear(GL_COLOR_BUFFER_BIT);
 
-		//sr.DrawSprite(tex, projection, glm::vec2(300.0f, 0.0f), glm::vec2(512, 512));
-		//sr.DrawSprite(texBall, projection, glm::vec2(400.0f, 400.0f), texBall.GetSize());
-
 		dt = clock() - time;
 		time = clock();
 		if (dt < 50) {
 			world->tick(dt);
-			scriptManager.tick(dt);
 		}
 
 		std::cout << "tick" << std::endl;

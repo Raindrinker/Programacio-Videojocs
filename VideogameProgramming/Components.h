@@ -44,3 +44,12 @@ struct BoxCollider
     float height = 0;
     bool collidedWith = false;
 };
+
+struct ScriptComponent
+{
+    ScriptComponent(int scriptId) {
+        this->scriptId = scriptId;
+    }
+
+    int scriptId = -1;
+};

@@ -16,10 +16,15 @@ public:
 
     ScriptManager();
 
-    virtual void AddScript(Script* script);
-    virtual void tick(float deltaTime);
+    virtual int AddScript(Script* script);
+    virtual void tickScript(int scriptId, float deltaTime);
+    Script* getScript(int scriptId);
+
+    void Delete();
 
 private:
-    std::list<Script*> scripts;
+    map<int, Script*> scripts;
+
+    int autoinc = 0;
 
 };

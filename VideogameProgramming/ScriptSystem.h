@@ -6,22 +6,21 @@
 #include "ECS.h"
 #include "Components.h"
 #include "Texture.h"
-#include "TextureManager.h"
-#include "SpriteRenderer.h"
+#include "ScriptManager.h"
 
 using namespace std;
 using namespace ECS;
 
-class RenderSystem : public EntitySystem
+class ScriptSystem : public EntitySystem
 {
 public:
 
-    RenderSystem(int width, int height);
+    ScriptSystem();
     virtual void tick(World* world, float deltaTime) override;
 
+    ScriptManager* getScriptManager();
+
 private:
-    TextureManager textureManager;
-    SpriteRenderer sr;
-    glm::mat4 projection;
+    ScriptManager scriptManager;
 
 };

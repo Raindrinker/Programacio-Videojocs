@@ -17,3 +17,7 @@ void Script::tickScript(float deltaTime)
 {
 	cout << "update" << endl;
 }
+
+void Script::Delete() {
+	delete this;
+}

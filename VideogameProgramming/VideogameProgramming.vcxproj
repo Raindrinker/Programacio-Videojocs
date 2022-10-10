@@ -154,6 +154,7 @@
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="ScriptManager.cpp" />
+    <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="BallScript.cpp" />
     <ClCompile Include="SpriteRenderer.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="ScriptManager.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Script.h" />
+    <ClInclude Include="ScriptSystem.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SpriteRenderer.h" />
     <ClInclude Include="Texture.h" />

@@ -13,6 +13,8 @@ public:
 
     void tickScript(float deltaTime) override;
 
+    void Break();
+
 private:
     int hp = 1;
     bool destroyed = false;

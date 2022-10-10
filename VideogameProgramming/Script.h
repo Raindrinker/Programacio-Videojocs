@@ -20,6 +20,8 @@ public:
     
     virtual void tickScript(float deltaTime);
 
+    void Delete();
+
 protected:
     Entity* entity;
     GLFWwindow* window;
