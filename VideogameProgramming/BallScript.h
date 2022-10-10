@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Script.h"
+#include "BlockScript.h"
 
 using namespace std;
 

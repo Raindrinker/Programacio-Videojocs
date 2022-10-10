@@ -25,10 +25,3 @@ void RenderSystem::tick(World* world, float deltaTime)
 
     });
 }
-
-void RenderSystem::unconfigure(World* world) {
-
-    sr.Delete();
-
-    textureManager.Delete();
-}

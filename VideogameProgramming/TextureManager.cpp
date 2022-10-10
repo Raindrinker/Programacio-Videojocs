@@ -28,4 +28,6 @@ void TextureManager::Delete() {
 		it->second.Delete();
 	}
 
+	delete this;
+
 }
