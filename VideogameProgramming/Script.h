@@ -14,6 +14,7 @@ class Script
 {
 public:
 
+    Script();
     Script(GLFWwindow* window, World* world,  Entity* entity);
 
     virtual void startScript();

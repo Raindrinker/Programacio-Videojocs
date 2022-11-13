@@ -1,11 +1,8 @@
 #version 330 core
 layout (location = 0) in vec3 aPos;
-layout (location = 1) in vec3 aNormals;
-layout (location = 2) in vec3 aColor;
-layout (location = 3) in vec2 aTex;
+layout (location = 1) in vec2 aTex;
 
-out vec2 uvs;
-out vec3 normals;
+out vec2 TexCoords;
 
 uniform float scale = 1.0;
 
@@ -17,6 +14,5 @@ void main()
 {
    gl_Position = proj * view * model * vec4(aPos, 1.0);
 
-   uvs = aTex;
-   normals = aNormals;
+   TexCoords = aTex;
 }

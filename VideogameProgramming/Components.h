@@ -3,9 +3,9 @@
 #include <glm/glm.hpp>
 #include "Texture.h"
 
-struct Transform
+struct Transform2D
 {
-    Transform(glm::vec2 position, float rotation, float scale) {
+    Transform2D(glm::vec2 position, float rotation, float scale) {
         this->position = position;
         this->rotation = rotation;
         this->scale = scale;
@@ -14,6 +14,28 @@ struct Transform
     glm::vec2 position;
     float rotation;
     float scale;
+};
+
+struct Transform3D
+{
+    Transform3D(glm::vec3 position) {
+        this->position = position;
+    }
+
+    glm::vec3 position;
+};
+
+struct Camera
+{
+    Camera(glm::vec3 position, glm::vec3 orientation, glm::vec3 up) {
+        this->position = position;
+        this->orientation = orientation;
+        this->up = up;
+    }
+
+    glm::vec3 position;
+    glm::vec3 orientation;
+    glm::vec3 up;
 };
 
 struct Sprite
@@ -30,6 +52,18 @@ struct Sprite
     glm::vec3 color;
     bool autoSize;
     glm::vec2 size = glm::vec2(1, 1);
+    const char* shaderName;
+};
+
+struct MeshComponent
+{
+    MeshComponent(const char* textureFilepath, const char* meshFilepath, const char* shaderName = "default") {
+        this->textureFilepath = textureFilepath;
+        this->meshFilepath = meshFilepath;
+        this->shaderName = shaderName;
+    }
+    const char* textureFilepath;
+    const char* meshFilepath;
     const char* shaderName;
 };
 

@@ -145,19 +145,19 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BlockScript.cpp" />
     <ClCompile Include="Components.cpp" />
     <ClCompile Include="EBO.cpp" />
+    <ClCompile Include="FirstPersonCameraScript.cpp" />
     <ClCompile Include="glad.c" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="PaddleScript.cpp" />
+    <ClCompile Include="Mesh.cpp" />
+    <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="RenderSystem.cpp" />
     <ClCompile Include="Script.cpp" />
     <ClCompile Include="ScriptManager.cpp" />
     <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Shader.cpp" />
-    <ClCompile Include="BallScript.cpp" />
-    <ClCompile Include="SpriteRenderer.cpp" />
+    <ClCompile Include="Renderer.cpp" />
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -169,20 +169,22 @@
     <None Include="default.vert" />
     <None Include="inverted.frag" />
     <None Include="repeating.frag" />
+    <None Include="unlit.frag" />
+    <None Include="unlit.vert" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BallScript.h" />
-    <ClInclude Include="BlockScript.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Components.h" />
-    <ClInclude Include="PaddleScript.h" />
+    <ClInclude Include="FirstPersonCameraScript.h" />
+    <ClInclude Include="Mesh.h" />
+    <ClInclude Include="MeshManager.h" />
     <ClInclude Include="ScriptManager.h" />
     <ClInclude Include="RenderSystem.h" />
     <ClInclude Include="Script.h" />
     <ClInclude Include="ScriptSystem.h" />
     <ClInclude Include="Shader.h" />
-    <ClInclude Include="SpriteRenderer.h" />
+    <ClInclude Include="Renderer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="VAO.h" />
@@ -194,6 +196,20 @@
     <Image Include="Textures\button_blue.png" />
     <Image Include="Textures\button_yellow.png" />
     <Image Include="Textures\science_dog.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Object Include="Meshes\cube.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\teapot.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\teapot2.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

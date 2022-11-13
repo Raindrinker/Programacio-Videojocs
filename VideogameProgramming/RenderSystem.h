@@ -7,7 +7,8 @@
 #include "Components.h"
 #include "Texture.h"
 #include "TextureManager.h"
-#include "SpriteRenderer.h"
+#include "Renderer.h"
+#include "MeshManager.h"
 
 using namespace std;
 using namespace ECS;
@@ -18,10 +19,14 @@ public:
 
     RenderSystem(int width, int height);
     virtual void tick(World* world, float deltaTime) override;
+    void setCamera(Entity* camera);
 
 private:
+    int width;
+    int height;
+    Entity* camera;
     TextureManager textureManager;
-    SpriteRenderer sr;
-    glm::mat4 projection;
+    MeshManager meshManager;
+    Renderer rend;
 
 };

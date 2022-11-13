@@ -14,13 +14,11 @@
 #include "VAO.h"
 #include "EBO.h"
 #include "Texture.h"
-#include "SpriteRenderer.h"
+#include "Renderer.h"
 #include "RenderSystem.h"
 #include "ScriptSystem.h"
 #include "ScriptManager.h"
-#include "BallScript.h"
-#include "PaddleScript.h"
-#include "BlockScript.h"
+#include "FirstPersonCameraScript.h"
 #include "Script.h"
 
 #include "ECS.h"
@@ -76,51 +74,51 @@ bool SetupWindow() {
 	return true;
 }
 
-Entity* CreateEntity(glm::vec2 position, float rotation, float scale, const char* filepath, glm::vec3 color, 
+Entity* CreateEntity2D(glm::vec2 position, float rotation, float scale, const char* filepath, glm::vec3 color, 
 	bool autoSize = true, glm::vec2 size = glm::vec2(1.0, 1.0), const char* shaderName = "default") {
 	Entity* ent = world->create();
-	ent->assign<Transform>(position, rotation, scale);
+	ent->assign<Transform2D>(position, rotation, scale);
 	ent->assign<Sprite>(filepath, color, autoSize, size, shaderName);
+
+	return ent;
+}
+
+Entity* CreateEntity3DWithMesh(glm::vec3 position, const char* meshFilepath, const char* texFilepath) {
+	Entity* ent = world->create();
+	ent->assign<Transform3D>(position);
+	ent->assign<MeshComponent>(texFilepath, meshFilepath);
+
+	return ent;
+}
+
+Entity* CreateCamera(glm::vec3 position) {
+	Entity* ent = world->create();
+	ent->assign<Camera>(position, glm::vec3(0., 0., 1.), glm::vec3(0., 1., 0.));
 
 	return ent;
 }
 
 void SetupWorld() {
 
-	cout << "World" << endl;
+	RenderSystem* rs = new RenderSystem(width, height);
 
 	world = World::createWorld();
-	world->registerSystem(new RenderSystem(width, height));
+	world->registerSystem(rs);
 	ScriptSystem* scriptSystem = new ScriptSystem();
 	world->registerSystem(scriptSystem);
 
 	ScriptManager* scriptManager = scriptSystem->getScriptManager();
 
-	Entity* bg_ent = CreateEntity(glm::vec2(400.f, 400.f), 0.f, 1.f, "Textures/background_brown.png", glm::vec3(1., 1., 1.), false, glm::vec2(width, height), "repeating");
+	Entity* ent = CreateCamera(glm::vec3(0.0f, 2.f, -10.0f));
+	FirstPersonCameraScript* fps = new FirstPersonCameraScript(window, world, ent);
+	
+	ent->assign<ScriptComponent>(scriptManager->AddScript(fps));
 
-	Entity* paddle_ent = CreateEntity(glm::vec2(400.f, 700.f), 0.f, 1.f, "Textures/button_yellow.png", glm::vec3(1., 1., 1.));
-	paddle_ent->assign<BoxCollider>(128.f, 53.f);
+	rs->setCamera(ent);
 
-	Entity* ball_ent = CreateEntity(glm::vec2(400.f, 300.f), 0.f, 1.f, "Textures/ball_blue_small.png", glm::vec3(1., 1., 1.));
-	ball_ent->assign<BoxCollider>(32.f, 32.f);
+	Entity* sprite = CreateEntity2D(glm::vec2(100., 100.), 0.f, 1.f, "Textures/science_dog.png", glm::vec3(1., 1., 1.), false, glm::vec2(100., 100.));
 
-	BallScript* ball_script = new BallScript(window, world, ball_ent);
-	ball_ent->assign<ScriptComponent>(scriptManager->AddScript(ball_script));
-
-	scriptManager->tickScript(0, 0);
-
-	PaddleScript* paddle_script = new PaddleScript(window, world, paddle_ent);
-	paddle_ent->assign<ScriptComponent>(scriptManager->AddScript(paddle_script));
-
-	for (int i = 0; i < 5; i++) {
-		for (int j = 0; j < 3; j++) {
-			Entity* block_ent = CreateEntity(glm::vec2(140.f + 128.f * i, 100.f + 53.f * j), 0.f, 1.f, "Textures/button_blue.png", glm::vec3(1., 1., 1.));
-			block_ent->assign<BoxCollider>(128.f, 53.f);
-
-			BlockScript* block_script = new BlockScript(window, world, block_ent);
-			block_ent->assign<ScriptComponent>(scriptManager->AddScript(block_script));
-		}
-	}
+	Entity* obj1 = CreateEntity3DWithMesh(glm::vec3(0., 0., 0.), "Meshes/teapot2.obj", "Textures/science_dog.png");
 	
 }
 
@@ -143,16 +141,13 @@ int main() {
 		// Specify the color of the background
 		glClearColor(0.07f, 0.13f, 0.17f, 1.0f);
 		// Clean the back buffer and assign the new color to it
-		glClear(GL_COLOR_BUFFER_BIT);
+		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
 		dt = clock() - time;
 		time = clock();
 		if (dt < 50) {
 			world->tick(dt);
 		}
-
-		std::cout << "tick" << std::endl;
-		std::cout << dt << std::endl;
 
 		glfwSwapBuffers(window); //Swap buffers
 

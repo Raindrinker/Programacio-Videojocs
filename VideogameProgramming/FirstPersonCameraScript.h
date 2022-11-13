@@ -1,11 +1,10 @@
 #pragma once
 
 #include "Script.h"
-#include "BlockScript.h"
 
 using namespace std;
 
-class BallScript : public Script
+class FirstPersonCameraScript : public Script
 {
 
     using Script::Script;
@@ -17,9 +16,11 @@ public:
     void tickScript(float deltaTime) override;
 
 private:
-    void CheckCollisions();
 
-    glm::vec2 currDir = glm::vec2(0., 1.);
-    glm::vec2 limits = glm::vec2(800., 800.);
+    glm::vec3 direction = glm::vec3(1., 0., 0.);
+
+    bool firstClick = true;
+    float speed = 0.01f;
+    float sensitivity = 100.0f;
 
 };
