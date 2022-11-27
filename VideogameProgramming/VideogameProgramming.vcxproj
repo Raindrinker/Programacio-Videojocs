@@ -158,6 +158,8 @@
     <ClCompile Include="ScriptSystem.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Renderer.cpp" />
+    <ClCompile Include="SkyboxScript.cpp" />
+    <ClCompile Include="SpawnerScript.cpp" />
     <ClCompile Include="stb.cpp" />
     <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureManager.cpp" />
@@ -169,6 +171,8 @@
     <None Include="default.vert" />
     <None Include="inverted.frag" />
     <None Include="repeating.frag" />
+    <None Include="skybox.frag" />
+    <None Include="skybox.vert" />
     <None Include="unlit.frag" />
     <None Include="unlit.vert" />
   </ItemGroup>
@@ -185,6 +189,8 @@
     <ClInclude Include="ScriptSystem.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="Renderer.h" />
+    <ClInclude Include="SkyboxScript.h" />
+    <ClInclude Include="SpawnerScript.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="VAO.h" />
@@ -195,10 +201,39 @@
     <Image Include="Textures\ball_blue_small.png" />
     <Image Include="Textures\button_blue.png" />
     <Image Include="Textures\button_yellow.png" />
+    <Image Include="Textures\cyborgFemaleA.png" />
     <Image Include="Textures\science_dog.png" />
+    <Image Include="Textures\skybox.png" />
+    <Image Include="Textures\skybox2.png" />
   </ItemGroup>
   <ItemGroup>
+    <Object Include="Meshes\boat_large.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\char.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\characterMedium.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
     <Object Include="Meshes\cube.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\flipped_sphere.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\plane.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\Register.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\structure.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Object>
@@ -207,6 +242,10 @@
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Object>
     <Object Include="Meshes\teapot2.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\WOLF.OBJ">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Object>

@@ -18,11 +18,13 @@ struct Transform2D
 
 struct Transform3D
 {
-    Transform3D(glm::vec3 position) {
+    Transform3D(glm::vec3 position, float scale) {
         this->position = position;
+        this->scale = scale;
     }
 
     glm::vec3 position;
+    float scale;
 };
 
 struct Camera
@@ -67,6 +69,16 @@ struct MeshComponent
     const char* shaderName;
 };
 
+struct Skybox
+{
+    Skybox(const char* textureFilepath, const char* meshFilepath) {
+        this->textureFilepath = textureFilepath;
+        this->meshFilepath = meshFilepath;
+    }
+    const char* textureFilepath;
+    const char* meshFilepath;
+};
+
 struct BoxCollider
 {
     BoxCollider(float w, float h) {
@@ -77,6 +89,19 @@ struct BoxCollider
     float width = 0;
     float height = 0;
     bool collidedWith = false;
+};
+
+struct CubeCollider
+{
+    CubeCollider(float w, float h, float l) {
+        this->width = w;
+        this->height = h;
+        this->length = l;
+    }
+
+    float width = 0;
+    float height = 0;
+    float length = 0;
 };
 
 struct ScriptComponent

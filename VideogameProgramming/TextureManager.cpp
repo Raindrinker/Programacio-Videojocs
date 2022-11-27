@@ -19,6 +19,25 @@ Texture TextureManager::GetTexture(const char* filepath)
 	}
 }
 
+Texture TextureManager::GetCubemapTexture(const char* filepath)
+{
+
+	auto pos = textures.find(filepath);
+	if (pos == textures.end()) {
+
+		Texture texture = Texture(filepath, GL_TEXTURE_CUBE_MAP, GL_TEXTURE0, GL_RGBA, GL_UNSIGNED_BYTE);
+		textures.insert(std::pair<string, Texture>(filepath, texture));
+
+		return texture;
+
+	}
+	else {
+
+		return pos->second;
+
+	}
+}
+
 void TextureManager::Delete() {
 
 	map<string, Texture>::iterator it;

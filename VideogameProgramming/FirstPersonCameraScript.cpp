@@ -1,4 +1,5 @@
 #include "FirstPersonCameraScript.h"
+#include <chrono>
 
 void FirstPersonCameraScript::startScript() {
 
@@ -13,30 +14,63 @@ void FirstPersonCameraScript::tickScript(float deltaTime) {
 	
 	ComponentHandle<Camera> cam = entity->get<Camera>();
 
-	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
+	glm::vec3 currentPosition = cam->position;
+	glm::vec3 desiredPosition = cam->position;
+
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
 	{
-		cam->position += speedDelta * cam->orientation;
+		desiredPosition += speedDelta * cam->orientation;
 	}
-	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
 	{
-		cam->position += speedDelta * -glm::normalize(glm::cross(cam->orientation, cam->up));
+		desiredPosition += speedDelta * -glm::normalize(glm::cross(cam->orientation, cam->up));
 	}
-	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
 	{
-		cam->position += speedDelta * -cam->orientation;
+		desiredPosition += speedDelta * -cam->orientation;
 	}
-	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
 	{
-		cam->position += speedDelta * glm::normalize(glm::cross(cam->orientation, cam->up));
+		desiredPosition += speedDelta * glm::normalize(glm::cross(cam->orientation, cam->up));
 	}
 	if (glfwGetKey(window, GLFW_KEY_SPACE) == GLFW_PRESS)
 	{
-		cam->position += speedDelta * cam->up;
+		desiredPosition += speedDelta * cam->up;
 	}
 	if (glfwGetKey(window, GLFW_KEY_LEFT_CONTROL) == GLFW_PRESS)
 	{
-		cam->position += speedDelta * -cam->up;
+		desiredPosition += speedDelta * -cam->up;
 	}
+
+	world->each<CubeCollider>([&](Entity* ent, ComponentHandle<CubeCollider> cubeColl) {
+
+		glm::vec3 pos = ent->get<Transform3D>()->position;
+
+		//Desired position inside cube
+		if (desiredPosition.x < pos.x + cubeColl->width && desiredPosition.x > pos.x - cubeColl->width &&
+			desiredPosition.y < pos.y + cubeColl->height && desiredPosition.y > pos.y - cubeColl->height &&
+			desiredPosition.z < pos.z + cubeColl->length && desiredPosition.z > pos.z - cubeColl->length) {
+
+			time_t result = time(NULL);
+
+			char str[26];
+			ctime_s(str, sizeof str, &result);
+
+			cout << "hit " << str << endl;
+
+			if (currentPosition.x <= pos.x - cubeColl->width) desiredPosition.x = pos.x - cubeColl->width;
+			if (currentPosition.x >= pos.x + cubeColl->width) desiredPosition.x = pos.x + cubeColl->width;
+			if (currentPosition.z <= pos.z - cubeColl->length) desiredPosition.z = pos.z - cubeColl->length;
+			if (currentPosition.z >= pos.z + cubeColl->length) desiredPosition.z = pos.z + cubeColl->length;
+			if (currentPosition.y <= pos.y - cubeColl->height) desiredPosition.y = pos.y - cubeColl->height;
+			if (currentPosition.y >= pos.y + cubeColl->height) desiredPosition.y = pos.y + cubeColl->height;
+		}
+
+	});
+
+	cam->position = desiredPosition;
+
+	cout << cam->position.x << " " << cam->position.z << endl;
 
 	// Handles mouse inputs
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)

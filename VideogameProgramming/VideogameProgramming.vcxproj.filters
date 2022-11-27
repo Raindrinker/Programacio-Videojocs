@@ -90,6 +90,12 @@
     <ClCompile Include="MeshManager.cpp">
       <Filter>Archivos de origen</Filter>
     </ClCompile>
+    <ClCompile Include="SpawnerScript.cpp">
+      <Filter>Archivos de origen\Scripts</Filter>
+    </ClCompile>
+    <ClCompile Include="SkyboxScript.cpp">
+      <Filter>Archivos de origen\Scripts</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="default.vert">
@@ -108,6 +114,12 @@
       <Filter>Archivos de recursos\Shaders</Filter>
     </None>
     <None Include="unlit.frag">
+      <Filter>Archivos de recursos\Shaders</Filter>
+    </None>
+    <None Include="skybox.vert">
+      <Filter>Archivos de recursos\Shaders</Filter>
+    </None>
+    <None Include="skybox.frag">
       <Filter>Archivos de recursos\Shaders</Filter>
     </None>
   </ItemGroup>
@@ -160,6 +172,12 @@
     <ClInclude Include="MeshManager.h">
       <Filter>Archivos de encabezado</Filter>
     </ClInclude>
+    <ClInclude Include="SpawnerScript.h">
+      <Filter>Archivos de encabezado\Scripts</Filter>
+    </ClInclude>
+    <ClInclude Include="SkyboxScript.h">
+      <Filter>Archivos de encabezado\Scripts</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\science_dog.png">
@@ -177,6 +195,15 @@
     <Image Include="Textures\button_blue.png">
       <Filter>Archivos de recursos\Textures</Filter>
     </Image>
+    <Image Include="Textures\cyborgFemaleA.png">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
+    <Image Include="Textures\skybox.png">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
+    <Image Include="Textures\skybox2.png">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Object Include="Meshes\cube.obj">
@@ -186,6 +213,30 @@
       <Filter>Archivos de recursos\Meshes</Filter>
     </Object>
     <Object Include="Meshes\teapot2.obj">
+      <Filter>Archivos de recursos\Meshes</Filter>
+    </Object>
+    <Object Include="Meshes\characterMedium.obj">
+      <Filter>Archivos de recursos\Meshes</Filter>
+    </Object>
+    <Object Include="Meshes\structure.obj">
+      <Filter>Archivos de recursos\Meshes</Filter>
+    </Object>
+    <Object Include="Meshes\boat_large.obj">
+      <Filter>Archivos de recursos\Meshes</Filter>
+    </Object>
+    <Object Include="Meshes\WOLF.OBJ">
+      <Filter>Archivos de recursos\Meshes</Filter>
+    </Object>
+    <Object Include="Meshes\Register.obj">
+      <Filter>Archivos de recursos\Meshes</Filter>
+    </Object>
+    <Object Include="Meshes\char.obj">
+      <Filter>Archivos de recursos\Meshes</Filter>
+    </Object>
+    <Object Include="Meshes\flipped_sphere.obj">
+      <Filter>Archivos de recursos\Meshes</Filter>
+    </Object>
+    <Object Include="Meshes\plane.obj">
       <Filter>Archivos de recursos\Meshes</Filter>
     </Object>
   </ItemGroup>

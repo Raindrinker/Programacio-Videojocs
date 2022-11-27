@@ -13,6 +13,8 @@ public:
 
     Texture GetTexture(const char* filepath);
 
+    Texture GetCubemapTexture(const char* filepath);
+
     void Delete();
 
 private:

@@ -22,6 +22,8 @@
 #include "Script.h"
 
 #include "ECS.h"
+#include "SpawnerScript.h"
+#include "SkyboxScript.h"
 
 using std::cout; 
 using std::endl;
@@ -83,17 +85,30 @@ Entity* CreateEntity2D(glm::vec2 position, float rotation, float scale, const ch
 	return ent;
 }
 
-Entity* CreateEntity3DWithMesh(glm::vec3 position, const char* meshFilepath, const char* texFilepath) {
+Entity* CreateEntity3DWithMesh(glm::vec3 position, float scale, const char* meshFilepath, const char* texFilepath) {
 	Entity* ent = world->create();
-	ent->assign<Transform3D>(position);
+	ent->assign<Transform3D>(position, scale);
 	ent->assign<MeshComponent>(texFilepath, meshFilepath);
+
+	return ent;
+}
+
+Entity* CreateEntity3DEmpty() {
+	Entity* ent = world->create();
 
 	return ent;
 }
 
 Entity* CreateCamera(glm::vec3 position) {
 	Entity* ent = world->create();
-	ent->assign<Camera>(position, glm::vec3(0., 0., 1.), glm::vec3(0., 1., 0.));
+	ent->assign<Camera>(position, glm::vec3(0., 0., -1.), glm::vec3(0., 1., 0.));
+
+	return ent;
+}
+
+Entity* CreateSkybox(const char* meshFilepath, const char* texFilepath) {
+	Entity* ent = world->create();
+	ent->assign<Skybox>(texFilepath, meshFilepath);
 
 	return ent;
 }
@@ -109,16 +124,46 @@ void SetupWorld() {
 
 	ScriptManager* scriptManager = scriptSystem->getScriptManager();
 
-	Entity* ent = CreateCamera(glm::vec3(0.0f, 2.f, -10.0f));
+	Entity* ent = CreateCamera(glm::vec3(30.0f, 2.f, 30.0f));
 	FirstPersonCameraScript* fps = new FirstPersonCameraScript(window, world, ent);
 	
 	ent->assign<ScriptComponent>(scriptManager->AddScript(fps));
 
 	rs->setCamera(ent);
 
-	Entity* sprite = CreateEntity2D(glm::vec2(100., 100.), 0.f, 1.f, "Textures/science_dog.png", glm::vec3(1., 1., 1.), false, glm::vec2(100., 100.));
+	//Entity* sprite = CreateEntity2D(glm::vec2(100., 100.), 0.f, 1.f, "Textures/science_dog.png", glm::vec3(1., 1., 1.), false, glm::vec2(100., 100.));
 
-	Entity* obj1 = CreateEntity3DWithMesh(glm::vec3(0., 0., 0.), "Meshes/teapot2.obj", "Textures/science_dog.png");
+	/*Entity* spawner = CreateEntity3DEmpty();
+	SpawnerScript* spawner_script = new SpawnerScript(window, world, spawner);
+	spawner->assign<ScriptComponent>(scriptManager->AddScript(spawner_script));*/
+
+	Entity* skybox = CreateSkybox("Meshes/flipped_sphere.obj", "Textures/skybox2.png");
+
+	Entity* floor = CreateEntity3DWithMesh(glm::vec3(18, 0, 18), 20, "Meshes/plane.obj", "Textures/wall.png");
+
+	string map[] = { 
+		"########-#", 
+		"#--#---#-#", 
+		"#-##-#-#-#",
+		"#-#--#---#",
+		"#-##-#####",
+		"#--#-----#",
+		"##-#####-#",
+		"##----#--#", 
+		"#--#-----#", 
+		"##########" 
+	};
+
+	for (int i = 0; i < 10; i++) {
+		for (int j = 0; j < 10; j++) {
+			if (map[i][j] == '#') {
+				Entity* wall = CreateEntity3DWithMesh(glm::vec3(i*4, 2, j*4), 2, "Meshes/cube.obj", "Textures/wall.png");
+				wall->assign<CubeCollider>(2.5, 2.5, 2.5);
+			}
+		}
+	}
+
+	
 	
 }
 
