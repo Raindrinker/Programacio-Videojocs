@@ -56,8 +56,6 @@ void FirstPersonCameraScript::tickScript(float deltaTime) {
 			char str[26];
 			ctime_s(str, sizeof str, &result);
 
-			cout << "hit " << str << endl;
-
 			if (currentPosition.x <= pos.x - cubeColl->width) desiredPosition.x = pos.x - cubeColl->width;
 			if (currentPosition.x >= pos.x + cubeColl->width) desiredPosition.x = pos.x + cubeColl->width;
 			if (currentPosition.z <= pos.z - cubeColl->length) desiredPosition.z = pos.z - cubeColl->length;
@@ -69,8 +67,6 @@ void FirstPersonCameraScript::tickScript(float deltaTime) {
 	});
 
 	cam->position = desiredPosition;
-
-	cout << cam->position.x << " " << cam->position.z << endl;
 
 	// Handles mouse inputs
 	if (glfwGetMouseButton(window, GLFW_MOUSE_BUTTON_LEFT) == GLFW_PRESS)
