@@ -29,6 +29,7 @@ void Renderer::Init()
     shaderUnlit = std::make_shared<Shader>("unlit.vert", "unlit.frag");
     shaderInverted = std::make_shared<Shader>("unlit.vert", "inverted.frag");
     shaderRepeating = std::make_shared<Shader>("unlit.vert", "repeating.frag");
+    shaderNoTexture = std::make_shared<Shader>("default.vert", "notexture.frag");
 
     // Generates Vertex Array Object and binds it
     vao_quad = std::make_shared<VAO>();
@@ -60,6 +61,9 @@ void Renderer::DrawSprite(Texture& texture, glm::mat4 proj, glm::vec2 position,
     }
     if (shaderName == "repeating") {
         shader = shaderRepeating;
+    }
+    if (shaderName == "notexture") {
+        shader = shaderNoTexture;
     }
     
     // prepare transformations
@@ -95,6 +99,11 @@ void Renderer::DrawMesh(Mesh& mesh, Texture& texture, glm::mat4 projection, glm:
 
     std::shared_ptr<Shader> shader = shaderDefault;
 
+    if (shaderName == "notexture") {
+        shader = shaderNoTexture;
+    }
+
+
     // prepare transformations
     shader->Activate();
 
@@ -111,6 +120,7 @@ void Renderer::DrawMesh(Mesh& mesh, Texture& texture, glm::mat4 projection, glm:
     shader->SetMatrix4("model", model);
     shader->SetMatrix4("view", view);
     shader->SetMatrix4("proj", proj);
+    shader->SetVector3f("tint", glm::vec3(1.0, 1.0, 1.0));
 
     glActiveTexture(GL_TEXTURE0);
     texture.Bind();

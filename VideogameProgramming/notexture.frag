@@ -5,7 +5,6 @@ in vec3 color;
 
 in vec3 normals;
 in vec2 uvs;
-in vec4 vpos;
 
 uniform sampler2D tex0;
 
@@ -16,24 +15,18 @@ uniform float ambient = 0.2;
 
 void main()
 {
-    vec4 texColor = texture(tex0, uvs);
+    vec3 texColor = tint;
     //FragColor = vec4(texColor.r, texColor.g, texColor.b, texColor.a);
 
     float dotProduct = 1- dot(lightDirection, normals);
 
     dotProduct = clamp(dotProduct, 0, 1);
 
-    vec4 directionalLight = vec4(dotProduct, dotProduct, dotProduct, 1);
+    vec3 directionalLight = vec3(dotProduct, dotProduct, dotProduct);
 
-    FragColor = texColor;
-
-    FragColor = texColor * directionalLight;
+    FragColor = vec4((texColor * directionalLight).xyz, 1.0);
 
     //FragColor = vec4((normals.x+1.)/2., (normals.y+1.)/2., (normals.z+1.)/2., 1.0f);
-    //FragColor = vec4(uvs, 0.0f, 1.0f);
-
-    if (vpos.y*10 - round(vpos.y*10) > 0.1) {
-        FragColor = vec4(1, 1, 1, 1.0);
-    }
-    //FragColor = vec4(color, 1.0f);
+   //FragColor = vec4(uvs, 0.0f, 1.0f);
+   //FragColor = vec4(color, 1.0f);
 }

@@ -168,6 +168,7 @@
     <None Include="default.frag" />
     <None Include="default.vert" />
     <None Include="inverted.frag" />
+    <None Include="notexture.frag" />
     <None Include="repeating.frag" />
     <None Include="unlit.frag" />
     <None Include="unlit.vert" />
@@ -195,11 +196,19 @@
     <Image Include="Textures\ball_blue_small.png" />
     <Image Include="Textures\button_blue.png" />
     <Image Include="Textures\button_yellow.png" />
+    <Image Include="Textures\perlin_noise.png" />
+    <Image Include="Textures\wizard_texture.png" />
     <Image Include="Textures\science_dog.png" />
   </ItemGroup>
   <ItemGroup>
     <Object Include="Meshes\cube.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\pipe.obj">
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\plane.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Object>
     <Object Include="Meshes\teapot.obj">
@@ -208,6 +217,9 @@
     </Object>
     <Object Include="Meshes\teapot2.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">true</ExcludedFromBuild>
+      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
+    </Object>
+    <Object Include="Meshes\wizard.obj">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </Object>
   </ItemGroup>

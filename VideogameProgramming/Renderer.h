@@ -34,6 +34,7 @@ private:
     std::shared_ptr<Shader> shaderUnlit;
     std::shared_ptr<Shader> shaderInverted;
     std::shared_ptr<Shader> shaderRepeating;
+    std::shared_ptr<Shader> shaderNoTexture;
     std::shared_ptr<VAO> vao_quad;
     std::shared_ptr<VBO> vbo;
     std::shared_ptr<EBO> ebo;

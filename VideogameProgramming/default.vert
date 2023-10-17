@@ -6,6 +6,7 @@ layout (location = 3) in vec2 aTex;
 
 out vec2 uvs;
 out vec3 normals;
+out vec3 vpos;
 
 uniform float scale = 1.0;
 
@@ -13,10 +14,13 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 proj;
 
+uniform sampler2D tex0;
+
 void main()
 {
-   gl_Position = proj * view * model * vec4(aPos, 1.0);
+   gl_Position = (proj * view * model * vec4(aPos, 1.0));
 
    uvs = aTex;
    normals = aNormals;
+   vpos = aPos;
 }

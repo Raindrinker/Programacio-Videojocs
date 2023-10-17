@@ -110,6 +110,9 @@
     <None Include="unlit.frag">
       <Filter>Archivos de recursos\Shaders</Filter>
     </None>
+    <None Include="notexture.frag">
+      <Filter>Archivos de recursos\Shaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Shader.h">
@@ -177,6 +180,12 @@
     <Image Include="Textures\button_blue.png">
       <Filter>Archivos de recursos\Textures</Filter>
     </Image>
+    <Image Include="Textures\wizard_texture.png">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
+    <Image Include="Textures\perlin_noise.png">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Object Include="Meshes\cube.obj">
@@ -186,6 +195,15 @@
       <Filter>Archivos de recursos\Meshes</Filter>
     </Object>
     <Object Include="Meshes\teapot2.obj">
+      <Filter>Archivos de recursos\Meshes</Filter>
+    </Object>
+    <Object Include="Meshes\wizard.obj">
+      <Filter>Archivos de recursos\Meshes</Filter>
+    </Object>
+    <Object Include="Meshes\pipe.obj">
+      <Filter>Archivos de recursos\Meshes</Filter>
+    </Object>
+    <Object Include="Meshes\plane.obj">
       <Filter>Archivos de recursos\Meshes</Filter>
     </Object>
   </ItemGroup>

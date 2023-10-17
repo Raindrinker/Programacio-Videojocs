@@ -83,10 +83,10 @@ Entity* CreateEntity2D(glm::vec2 position, float rotation, float scale, const ch
 	return ent;
 }
 
-Entity* CreateEntity3DWithMesh(glm::vec3 position, const char* meshFilepath, const char* texFilepath) {
+Entity* CreateEntity3DWithMesh(glm::vec3 position, const char* meshFilepath, const char* texFilepath, const char* shaderName = "default") {
 	Entity* ent = world->create();
 	ent->assign<Transform3D>(position);
-	ent->assign<MeshComponent>(texFilepath, meshFilepath);
+	ent->assign<MeshComponent>(texFilepath, meshFilepath, shaderName);
 
 	return ent;
 }
@@ -118,7 +118,13 @@ void SetupWorld() {
 
 	Entity* sprite = CreateEntity2D(glm::vec2(100., 100.), 0.f, 1.f, "Textures/science_dog.png", glm::vec3(1., 1., 1.), false, glm::vec2(100., 100.));
 
-	Entity* obj1 = CreateEntity3DWithMesh(glm::vec3(0., 0., 0.), "Meshes/teapot2.obj", "Textures/science_dog.png");
+	Entity* obj1 = CreateEntity3DWithMesh(glm::vec3(0., 1.5, 0.), "Meshes/wizard.obj", "Textures/wizard_texture.png");
+
+	Entity* obj2 = CreateEntity3DWithMesh(glm::vec3(-5., 1, 0.), "Meshes/teapot.obj", "Textures/wizard_texture.png", "notexture");
+
+	Entity* obj3 = CreateEntity3DWithMesh(glm::vec3(5., 1, 0.), "Meshes/pipe.obj", "Textures/science_dog.png");
+
+	Entity* obj4 = CreateEntity3DWithMesh(glm::vec3(10., 0.5, 0.), "Meshes/plane.obj", "Textures/perlin_noise.png");
 	
 }
 
