@@ -5,7 +5,7 @@ in vec3 color;
 
 in vec3 normals;
 in vec2 uvs;
-in vec4 vpos;
+in vec3 vpos;
 
 uniform sampler2D tex0;
 

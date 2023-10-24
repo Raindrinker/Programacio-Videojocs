@@ -165,6 +165,8 @@
     <ClCompile Include="VBO.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="2dsdf.frag" />
+    <None Include="3dsdf.frag" />
     <None Include="default.frag" />
     <None Include="default.vert" />
     <None Include="inverted.frag" />

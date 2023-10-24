@@ -17,6 +17,7 @@ public:
 
     ScriptSystem();
     virtual void tick(World* world, float deltaTime) override;
+    virtual void start(World* world);
 
     ScriptManager* getScriptManager();
 

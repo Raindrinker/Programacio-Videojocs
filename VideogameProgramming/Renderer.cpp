@@ -30,6 +30,7 @@ void Renderer::Init()
     shaderInverted = std::make_shared<Shader>("unlit.vert", "inverted.frag");
     shaderRepeating = std::make_shared<Shader>("unlit.vert", "repeating.frag");
     shaderNoTexture = std::make_shared<Shader>("default.vert", "notexture.frag");
+    shaderSdf2D = std::make_shared<Shader>("default.vert", "2dsdf.frag");
 
     // Generates Vertex Array Object and binds it
     vao_quad = std::make_shared<VAO>();
@@ -64,6 +65,9 @@ void Renderer::DrawSprite(Texture& texture, glm::mat4 proj, glm::vec2 position,
     }
     if (shaderName == "notexture") {
         shader = shaderNoTexture;
+    }
+    if (shaderName == "sdf2d") {
+        shader = shaderSdf2D;
     }
     
     // prepare transformations

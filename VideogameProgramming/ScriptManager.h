@@ -18,6 +18,7 @@ public:
 
     virtual int AddScript(Script* script);
     virtual void tickScript(int scriptId, float deltaTime);
+    virtual void startScript(int scriptId);
     Script* getScript(int scriptId);
 
     void Delete();

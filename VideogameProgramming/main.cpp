@@ -118,6 +118,9 @@ void SetupWorld() {
 
 	Entity* sprite = CreateEntity2D(glm::vec2(100., 100.), 0.f, 1.f, "Textures/science_dog.png", glm::vec3(1., 1., 1.), false, glm::vec2(100., 100.));
 
+	Entity* sprite2 = CreateEntity2D(glm::vec2(250., 100.), 0.f, 1.f, "Textures/science_dog.png", glm::vec3(1., 1., 1.), false, glm::vec2(100., 100.), "sdf2d");
+	Entity* sprite3 = CreateEntity2D(glm::vec2(100., 250.), 0.f, 1.f, "Textures/science_dog.png", glm::vec3(1., 1., 1.), false, glm::vec2(100., 100.), "sdf2d");
+
 	Entity* obj1 = CreateEntity3DWithMesh(glm::vec3(0., 1.5, 0.), "Meshes/wizard.obj", "Textures/wizard_texture.png");
 
 	Entity* obj2 = CreateEntity3DWithMesh(glm::vec3(-5., 1, 0.), "Meshes/teapot.obj", "Textures/wizard_texture.png", "notexture");
@@ -125,6 +128,10 @@ void SetupWorld() {
 	Entity* obj3 = CreateEntity3DWithMesh(glm::vec3(5., 1, 0.), "Meshes/pipe.obj", "Textures/science_dog.png");
 
 	Entity* obj4 = CreateEntity3DWithMesh(glm::vec3(10., 0.5, 0.), "Meshes/plane.obj", "Textures/perlin_noise.png");
+
+	Entity* obj5 = CreateEntity3DWithMesh(glm::vec3(-10., 2., 0.), "Meshes/cube.obj", "Textures/perlin_noise.png", "sdf3d");
+
+	scriptSystem->start(world);
 	
 }
 

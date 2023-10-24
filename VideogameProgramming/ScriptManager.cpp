@@ -15,6 +15,12 @@ int ScriptManager::AddScript(Script* script) {
     
 }
 
+void ScriptManager::startScript(int scriptId) {
+
+
+    scripts[scriptId]->startScript();
+}
+
 void ScriptManager::tickScript(int scriptId, float deltaTime) {
 
 
