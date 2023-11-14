@@ -12,31 +12,17 @@ uniform sampler2D texNormals;
 
 uniform vec3 tint = vec3(1.0, 1.0, 1.0);
 
-<<<<<<< HEAD
-uniform vec3 lightDirection = vec3(0.0, -1, 0.0);
-=======
-uniform vec3 lightDirection = vec3(-1, -1, 0.0);
->>>>>>> 4d072e061b24e1bd4ec86677d11346949db6d376
+uniform vec3 lightDirection = vec3(-0.5, -1, 0.0);
 
 void main()
 {
-    
-<<<<<<< HEAD
-=======
-    
-    
->>>>>>> 4d072e061b24e1bd4ec86677d11346949db6d376
     vec4 texColor = texture(tex0, uvs);
     //FragColor = vec4(texColor.r, texColor.g, texColor.b, texColor.a);
 
     vec3 normalMap = (texture(texNormals, uvs).rgb * 2.0f) -1.0f;
     normalMap = normalize(TBN * normalMap); 
 
-<<<<<<< HEAD
-=======
-    //vec3 lightDir = TBN * normalize(lightDirection);
 
->>>>>>> 4d072e061b24e1bd4ec86677d11346949db6d376
     float dotProduct = 1- (dot(normalize(lightDirection), normalize(normalMap)) + 1)/2.0f;
 
     dotProduct = clamp(dotProduct, 0, 1);
