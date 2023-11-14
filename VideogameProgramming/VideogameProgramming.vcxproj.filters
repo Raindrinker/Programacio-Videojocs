@@ -204,6 +204,18 @@
     <Image Include="Textures\skybox2.png">
       <Filter>Archivos de recursos\Textures</Filter>
     </Image>
+    <Image Include="Textures\wall.png">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
+    <Image Include="Textures\bricks_albedo.png">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
+    <Image Include="Textures\bricks_normal.png">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
+    <Image Include="Textures\flat_normal.png">
+      <Filter>Archivos de recursos\Textures</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <Object Include="Meshes\cube.obj">

@@ -71,6 +71,7 @@ bool SetupWindow() {
 	glViewport(0, 0, width, height);
 
 	glEnable(GL_BLEND);
+	glEnable(GL_CULL_FACE);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
 	return true;
@@ -85,10 +86,10 @@ Entity* CreateEntity2D(glm::vec2 position, float rotation, float scale, const ch
 	return ent;
 }
 
-Entity* CreateEntity3DWithMesh(glm::vec3 position, float scale, const char* meshFilepath, const char* texFilepath) {
+Entity* CreateEntity3DWithMesh(glm::vec3 position, float scale, const char* meshFilepath, const char* texFilepath, const char* normalsFilepath = "Textures/flat_normals.png", const char* shader = "default") {
 	Entity* ent = world->create();
 	ent->assign<Transform3D>(position, scale);
-	ent->assign<MeshComponent>(texFilepath, meshFilepath);
+	ent->assign<MeshComponent>(texFilepath, meshFilepath, shader, normalsFilepath);
 
 	return ent;
 }
@@ -141,7 +142,7 @@ void SetupWorld() {
 
 	Entity* floor = CreateEntity3DWithMesh(glm::vec3(18, 0, 18), 20, "Meshes/plane.obj", "Textures/wall.png");
 
-	string map[] = { 
+	string map[] = {
 		"########-#", 
 		"#--#---#-#", 
 		"#-##-#-#-#",
@@ -154,11 +155,24 @@ void SetupWorld() {
 		"##########" 
 	};
 
+	/*string map[] = {
+		"----------",
+		"----------",
+		"----------",
+		"----------",
+		"----#-----",
+		"----------",
+		"----------",
+		"----------",
+		"----------",
+		"----------"
+	};*/
+
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			if (map[i][j] == '#') {
-				Entity* wall = CreateEntity3DWithMesh(glm::vec3(i*4, 2, j*4), 2, "Meshes/cube.obj", "Textures/wall.png");
-				wall->assign<CubeCollider>(2.5, 2.5, 2.5);
+				Entity* wall = CreateEntity3DWithMesh(glm::vec3(i*4, 2, j*4), 2, "Meshes/cube.obj", "Textures/bricks_albedo.png", "Textures/bricks_normal.png");
+				wall->assign<CubeCollider>(2.1, 2.1, 2.1);
 			}
 		}
 	}

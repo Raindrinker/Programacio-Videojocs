@@ -49,11 +49,10 @@ void RenderSystem::tick(World* world, float deltaTime)
 
     world->each<MeshComponent>([&](Entity* ent, ComponentHandle<MeshComponent> meshComp) {
 
-        
-
         ComponentHandle<Transform3D> transform = ent->get<Transform3D>();
 
         Texture texture = textureManager.GetTexture(meshComp->textureFilepath);
+        Texture normalsTexture = textureManager.GetTexture(meshComp->normalsFilepath);
 
         Mesh mesh = meshManager.GetMesh(meshComp->meshFilepath);
 
@@ -61,7 +60,7 @@ void RenderSystem::tick(World* world, float deltaTime)
 
         ComponentHandle<Camera> cam = camera->get<Camera>();
 
-        rend.DrawMesh(mesh, texture, proj, transform->position, transform->scale, cam.get(), meshComp->shaderName);
+        rend.DrawMesh(mesh, texture, proj, transform->position, transform->scale, cam.get(), normalsTexture, meshComp->shaderName);
 
     });
 

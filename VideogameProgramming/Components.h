@@ -59,12 +59,14 @@ struct Sprite
 
 struct MeshComponent
 {
-    MeshComponent(const char* textureFilepath, const char* meshFilepath, const char* shaderName = "default") {
+    MeshComponent(const char* textureFilepath, const char* meshFilepath, const char* shaderName = "default", const char* normalsFilepath = "Textures/flat_normal.png") {
         this->textureFilepath = textureFilepath;
         this->meshFilepath = meshFilepath;
         this->shaderName = shaderName;
+        this->normalsFilepath = normalsFilepath;
     }
     const char* textureFilepath;
+    const char* normalsFilepath;
     const char* meshFilepath;
     const char* shaderName;
 };

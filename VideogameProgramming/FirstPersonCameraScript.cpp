@@ -17,19 +17,19 @@ void FirstPersonCameraScript::tickScript(float deltaTime) {
 	glm::vec3 currentPosition = cam->position;
 	glm::vec3 desiredPosition = cam->position;
 
-	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
 	{
 		desiredPosition += speedDelta * cam->orientation;
 	}
-	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_LEFT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS)
 	{
 		desiredPosition += speedDelta * -glm::normalize(glm::cross(cam->orientation, cam->up));
 	}
-	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS)
 	{
 		desiredPosition += speedDelta * -cam->orientation;
 	}
-	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS)
+	if (glfwGetKey(window, GLFW_KEY_RIGHT) == GLFW_PRESS || glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS)
 	{
 		desiredPosition += speedDelta * glm::normalize(glm::cross(cam->orientation, cam->up));
 	}
