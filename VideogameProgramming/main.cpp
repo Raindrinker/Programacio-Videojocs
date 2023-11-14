@@ -86,17 +86,11 @@ Entity* CreateEntity2D(glm::vec2 position, float rotation, float scale, const ch
 	return ent;
 }
 
-<<<<<<< HEAD
-Entity* CreateEntity3DWithMesh(glm::vec3 position, float scale, const char* meshFilepath, const char* texFilepath, const char* normalsFilepath = "Textures/flat_normals.png", const char* shader = "default") {
-	Entity* ent = world->create();
-	ent->assign<Transform3D>(position, scale);
-	ent->assign<MeshComponent>(texFilepath, meshFilepath, shader, normalsFilepath);
-=======
+
 Entity* CreateEntity3DWithMesh(glm::vec3 position, float scale, const char* meshFilepath, const char* texFilepath, const char* normalsFilepath = "Textures/flat_normals.png") {
 	Entity* ent = world->create();
 	ent->assign<Transform3D>(position, scale);
 	ent->assign<MeshComponent>(texFilepath, meshFilepath, "default", normalsFilepath);
->>>>>>> 4d072e061b24e1bd4ec86677d11346949db6d376
 
 	return ent;
 }
