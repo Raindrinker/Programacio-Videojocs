@@ -29,6 +29,12 @@ void Renderer::Init()
     shaderUnlit = std::make_shared<Shader>("unlit.vert", "unlit.frag");
     shaderInverted = std::make_shared<Shader>("unlit.vert", "inverted.frag");
     shaderRepeating = std::make_shared<Shader>("unlit.vert", "repeating.frag");
+    shaderSkybox = std::make_shared<Shader>("skybox.vert", "skybox.frag");
+
+    /*GLint tex0handle = glGetUniformLocation(shaderDefault->ID, "tex0");
+    GLint tex1handle = glGetUniformLocation(shaderDefault->ID, "tex1");
+    glUniform1i(tex0handle, 0);
+    glUniform1i(tex1handle, 1);*/
 
     // Generates Vertex Array Object and binds it
     vao_quad = std::make_shared<VAO>();
@@ -90,7 +96,7 @@ void Renderer::DrawSprite(Texture& texture, glm::mat4 proj, glm::vec2 position,
 double prevTime = glfwGetTime();
 
 void Renderer::DrawMesh(Mesh& mesh, Texture& texture, glm::mat4 projection, glm::vec3 position, float scale, Camera cam,
-    string shaderName)
+    Texture& normalsTexture, string shaderName)
 {
 
     std::shared_ptr<Shader> shader = shaderDefault;
@@ -113,10 +119,14 @@ void Renderer::DrawMesh(Mesh& mesh, Texture& texture, glm::mat4 projection, glm:
     shader->SetMatrix4("view", view);
     shader->SetMatrix4("proj", proj);
 
-    glActiveTexture(GL_TEXTURE0);
-    texture.Bind();
 
-    //cout << mesh.indices.size() << endl;
+    glActiveTexture(GL_TEXTURE0 + 0);
+    texture.Bind();
+    shader->SetTextureSampler("tex0", 0);
+
+    glActiveTexture(GL_TEXTURE0 + 1);
+    normalsTexture.Bind();
+    shader->SetTextureSampler("texNormals", 1);
 
     mesh.VAO.Bind();
     glDrawElements(GL_TRIANGLES, mesh.indices.size(), GL_UNSIGNED_INT, 0);
@@ -127,7 +137,7 @@ void Renderer::DrawMesh(Mesh& mesh, Texture& texture, glm::mat4 projection, glm:
 void Renderer::DrawSkybox(Mesh& mesh, Texture& texture, glm::mat4 projection, Camera cam)
 {
 
-    std::shared_ptr<Shader> shader = shaderDefault;
+    std::shared_ptr<Shader> shader = shaderSkybox;
 
     // prepare transformations
     shader->Activate();
