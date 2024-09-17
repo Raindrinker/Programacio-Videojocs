@@ -4,6 +4,8 @@ RenderSystem::RenderSystem(int width, int height) {
 
     this->width = width;
     this->height = height;
+    
+    projection = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
 
     rend.Init();
 }
@@ -16,6 +18,7 @@ void RenderSystem::setCamera(Entity* camera)
 void RenderSystem::tick(World* world, float deltaTime) 
 {
     
+    glEnable(GL_CULL_FACE);
     world->each<Skybox>([&](Entity* ent, ComponentHandle<Skybox> meshComp) {
 
         Texture texture = textureManager.GetTexture(meshComp->textureFilepath);
@@ -30,13 +33,12 @@ void RenderSystem::tick(World* world, float deltaTime)
 
     });
     
+    glDisable(GL_CULL_FACE);
     world->each<Sprite>([&](Entity* ent, ComponentHandle<Sprite> sprite) {
 
         ComponentHandle<Transform2D> transform = ent->get<Transform2D>();
 
         Texture texture = textureManager.GetTexture(sprite->filepath);
-
-        glm::mat4 projection = glm::ortho(0.0f, static_cast<float>(width), static_cast<float>(height), 0.0f, -1.0f, 1.0f);
            
         if (sprite->autoSize) {
             rend.DrawSprite(texture, projection, transform->position, texture.GetSize(), transform->rotation, sprite->color, sprite->shaderName);
@@ -47,6 +49,7 @@ void RenderSystem::tick(World* world, float deltaTime)
 
     });
 
+    glEnable(GL_CULL_FACE);
     world->each<MeshComponent>([&](Entity* ent, ComponentHandle<MeshComponent> meshComp) {
 
         ComponentHandle<Transform3D> transform = ent->get<Transform3D>();
@@ -60,7 +63,7 @@ void RenderSystem::tick(World* world, float deltaTime)
 
         ComponentHandle<Camera> cam = camera->get<Camera>();
 
-        rend.DrawMesh(mesh, texture, proj, transform->position, transform->scale, cam.get(), normalsTexture, meshComp->shaderName);
+        rend.DrawMesh(mesh, texture, proj, transform->position, transform->scale, transform->rotation, cam.get(), normalsTexture, meshComp->shaderName);
 
     });
 

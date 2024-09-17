@@ -14,7 +14,7 @@ void SpawnerScript::tickScript(float deltaTime)
 		t = 0;
 
 		Entity* ent = world->create();
-		ent->assign<Transform3D>(glm::vec3(0., 0., 0.), 1);
+		//ent->assign<Transform3D>(glm::vec3(0., 0., 0.), 1);
 		ent->assign<MeshComponent>("Meshes/cube.obj", "Textures/science_dog.png");
 
 		//Entity* ent2d = world->create();

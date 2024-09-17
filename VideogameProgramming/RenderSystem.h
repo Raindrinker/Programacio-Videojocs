@@ -29,4 +29,5 @@ private:
     MeshManager meshManager;
     Renderer rend;
 
+    glm::mat4 projection;
 };

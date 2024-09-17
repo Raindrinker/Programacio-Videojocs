@@ -87,9 +87,9 @@ Entity* CreateEntity2D(glm::vec2 position, float rotation, float scale, const ch
 }
 
 
-Entity* CreateEntity3DWithMesh(glm::vec3 position, float scale, const char* meshFilepath, const char* texFilepath, const char* normalsFilepath = "Textures/flat_normals.png") {
+Entity* CreateEntity3DWithMesh(glm::vec3 position, float scale, glm::vec3 rotation, const char* meshFilepath, const char* texFilepath, const char* normalsFilepath = "Textures/flat_normals.png") {
 	Entity* ent = world->create();
-	ent->assign<Transform3D>(position, scale);
+	ent->assign<Transform3D>(position, scale, rotation);
 	ent->assign<MeshComponent>(texFilepath, meshFilepath, "default", normalsFilepath);
 
 	return ent;
@@ -133,7 +133,8 @@ void SetupWorld() {
 
 	rs->setCamera(ent);
 
-	//Entity* sprite = CreateEntity2D(glm::vec2(100., 100.), 0.f, 1.f, "Textures/science_dog.png", glm::vec3(1., 1., 1.), false, glm::vec2(100., 100.));
+	//Entity* sprite = CreateEntity2D(glm::vec2(0., 0.), 0.f, 1.f, "Textures/science_dog.png", glm::vec3(1., 1., 1.), false, glm::vec2(5., 5.));
+	Entity* paddle_ent = CreateEntity2D(glm::vec2(300, 300), 0.f, 1.f, "Textures/button_yellow.png", glm::vec3(1., 1., 1.), true);
 
 	/*Entity* spawner = CreateEntity3DEmpty();
 	SpawnerScript* spawner_script = new SpawnerScript(window, world, spawner);
@@ -141,7 +142,20 @@ void SetupWorld() {
 
 	Entity* skybox = CreateSkybox("Meshes/flipped_sphere.obj", "Textures/skybox2.png");
 
-	Entity* floor = CreateEntity3DWithMesh(glm::vec3(32, 0, 18), 20, "Meshes/plane.obj", "Textures/wall.png");
+	Entity* floor = CreateEntity3DWithMesh(glm::vec3(18, 0, 18), 20, glm::vec3(0, 0, 0), "Meshes/plane.obj", "Textures/wall.png");
+
+	glm::vec3 direction = glm::vec3(0.0, 1.0, 10.0);
+
+	// Create a lookAt matrix
+	glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0f), direction, glm::vec3(0.0f, 1.0f, 0.0f));
+
+	glm::vec3 eulerAngles = glm::eulerAngles(glm::quat_cast(viewMatrix));
+
+	cout << eulerAngles.x << endl;
+	cout << eulerAngles.y << endl;
+	cout << eulerAngles.z << endl;
+
+	Entity* wolf = CreateEntity3DWithMesh(glm::vec3(0, 4, 0), 1, eulerAngles, "Meshes/boat_large.obj", "Textures/wall.png");
 
 	string map[] = {
 		"########-#", 
@@ -172,7 +186,7 @@ void SetupWorld() {
 	for (int i = 0; i < 10; i++) {
 		for (int j = 0; j < 10; j++) {
 			if (map[i][j] == '#') {
-				Entity* wall = CreateEntity3DWithMesh(glm::vec3(i*4, 2, j*4), 2, "Meshes/cube.obj", "Textures/bricks_albedo.png", "Textures/bricks_normal.png");
+				Entity* wall = CreateEntity3DWithMesh(glm::vec3(i*4, 2, j*4), 2, glm::vec3(0, 0, 0), "Meshes/cube.obj", "Textures/bricks_albedo.png", "Textures/bricks_normal.png");
 				wall->assign<CubeCollider>(2.1, 2.1, 2.1);
 			}
 		}

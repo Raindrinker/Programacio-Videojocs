@@ -95,7 +95,7 @@ void Renderer::DrawSprite(Texture& texture, glm::mat4 proj, glm::vec2 position,
 
 double prevTime = glfwGetTime();
 
-void Renderer::DrawMesh(Mesh& mesh, Texture& texture, glm::mat4 projection, glm::vec3 position, float scale, Camera cam,
+void Renderer::DrawMesh(Mesh& mesh, Texture& texture, glm::mat4 projection, glm::vec3 position, float scale, glm::vec3 eulerAngles, Camera cam,
     Texture& normalsTexture, string shaderName)
 {
 
@@ -108,9 +108,11 @@ void Renderer::DrawMesh(Mesh& mesh, Texture& texture, glm::mat4 projection, glm:
     glm::mat4 view = glm::mat4(1.0f);
     glm::mat4 proj = glm::mat4(1.0f);
 
-    model = glm::rotate(model, glm::radians(0.f), glm::vec3(0.0f, 0.1f, 0.0f));
     model = glm::translate(model, glm::vec3(position));
     model = glm::scale(model, glm::vec3(scale, scale, scale));
+    model = glm::rotate(model, eulerAngles.x, glm::vec3(1.0f,0.f, 0.0f));
+    model = glm::rotate(model, eulerAngles.y, glm::vec3(0.0f, 1.f, 0.0f));
+    model = glm::rotate(model, eulerAngles.z, glm::vec3(0.0f, 0.f, 1.0f));
 
     view = glm::lookAt(cam.position, cam.position + cam.orientation, cam.up);
     proj = glm::perspective(glm::radians(45.0f), (float)(800 / 800), 0.1f, 100.0f);
