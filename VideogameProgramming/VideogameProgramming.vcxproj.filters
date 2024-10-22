@@ -31,6 +31,9 @@
     <Filter Include="Archivos de origen\Scripts">
       <UniqueIdentifier>{f3909bc2-36a0-4b4e-8b8a-9d5e2621a5cd}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Archivos de recursos\Audio">
+      <UniqueIdentifier>{f5625a6c-b361-46e2-a513-be709d4e37c2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="glad.c">
@@ -86,6 +89,9 @@
     </ClCompile>
     <ClCompile Include="ScriptSystem.cpp">
       <Filter>Archivos de origen\ECS</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioPlayer.cpp">
+      <Filter>Archivos de origen</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -151,6 +157,9 @@
     <ClInclude Include="ScriptSystem.h">
       <Filter>Archivos de encabezado\ECS</Filter>
     </ClInclude>
+    <ClInclude Include="AudioPlayer.h">
+      <Filter>Archivos de encabezado</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="Textures\science_dog.png">
@@ -168,5 +177,10 @@
     <Image Include="Textures\button_blue.png">
       <Filter>Archivos de recursos\Textures</Filter>
     </Image>
+  </ItemGroup>
+  <ItemGroup>
+    <Media Include="Audio\hit.wav">
+      <Filter>Archivos de recursos\Audio</Filter>
+    </Media>
   </ItemGroup>
 </Project>

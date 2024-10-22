@@ -6,8 +6,6 @@ void BallScript::startScript() {
 
 void BallScript::tickScript(float deltaTime) {
 
-	cout << "tick ball" << endl;
-
 	ComponentHandle<Transform> transform = entity->get<Transform>();
 
 	transform->position += currDir * deltaTime / 2.f;

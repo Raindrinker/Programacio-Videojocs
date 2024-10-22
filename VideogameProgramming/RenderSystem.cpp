@@ -10,8 +10,6 @@ void RenderSystem::tick(World* world, float deltaTime)
 {
     world->each<Sprite>([&](Entity* ent, ComponentHandle<Sprite> sprite) {
 
-        cout << "render" << endl;
-
         ComponentHandle<Transform> transform = ent->get<Transform>();
 
         Texture texture = textureManager.GetTexture(sprite->filepath);

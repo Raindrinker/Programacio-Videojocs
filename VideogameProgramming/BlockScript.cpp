@@ -1,4 +1,5 @@
 #include "BlockScript.h"
+#include "AudioPlayer.h"
 
 void BlockScript::tickScript(float deltaTime) {
 
@@ -13,6 +14,8 @@ void BlockScript::tickScript(float deltaTime) {
 		if (hp <= 0) {
 			destroyed = true;
 			world->destroy(entity);
+
+			AudioPlayer::PlayAudio("./Audio/hit.wav", false);
 		}
 	}
 

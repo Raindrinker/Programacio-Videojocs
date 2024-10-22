@@ -19,8 +19,6 @@ int ScriptManager::AddScript(Script* script) {
 
 void ScriptManager::tickScript(int scriptId, float deltaTime) {
 
-    cout << "Ticking script " + std::to_string(scriptId) << endl;
-
     scripts[scriptId]->tickScript(deltaTime);
 }
 
