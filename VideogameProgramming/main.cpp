@@ -22,6 +22,7 @@
 #include "PaddleScript.h"
 #include "BlockScript.h"
 #include "Script.h"
+#include "AudioPlayer.h"
 
 #include "ECS.h"
 
@@ -137,6 +138,8 @@ int main() {
 	float dt = 0;
 	float time = clock();
 
+	AudioPlayer::PlayAudio("./Audio/industrious_ferret.wav", false);
+
 	//Program core loop
 	while (!glfwWindowShouldClose(window)) {
 
@@ -151,8 +154,8 @@ int main() {
 			world->tick(dt);
 		}
 
-		std::cout << "tick" << std::endl;
-		std::cout << dt << std::endl;
+		//std::cout << "tick" << std::endl;
+		//std::cout << dt << std::endl;
 
 		glfwSwapBuffers(window); //Swap buffers
 
