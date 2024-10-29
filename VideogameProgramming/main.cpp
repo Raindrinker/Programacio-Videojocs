@@ -138,6 +138,8 @@ int main() {
 	float dt = 0;
 	float time = clock();
 
+	AudioPlayer::Init();
+
 	AudioPlayer::PlayAudio("./Audio/industrious_ferret.wav", false);
 
 	//Program core loop
