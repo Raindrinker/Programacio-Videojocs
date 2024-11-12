@@ -135,7 +135,7 @@ void SetupWorld() {
 	rs->setCamera(ent);
 
 	//Entity* sprite = CreateEntity2D(glm::vec2(0., 0.), 0.f, 1.f, "Textures/science_dog.png", glm::vec3(1., 1., 1.), false, glm::vec2(5., 5.));
-	Entity* paddle_ent = CreateEntity2D(glm::vec2(300, 300), 0.f, 1.f, "Textures/button_yellow.png", glm::vec3(1., 1., 1.), true);
+	Entity* paddle_ent = CreateEntity2D(glm::vec2(100, 50), 0.f, 1.f, "Textures/button_yellow.png", glm::vec3(1., 1., 1.), true);
 
 	/*Entity* spawner = CreateEntity3DEmpty();
 	SpawnerScript* spawner_script = new SpawnerScript(window, world, spawner);
@@ -147,16 +147,14 @@ void SetupWorld() {
 
 	glm::vec3 direction = glm::vec3(0.0, 1.0, 10.0);
 
-	// Create a lookAt matrix
-	glm::mat4 viewMatrix = glm::lookAt(glm::vec3(0.0f), direction, glm::vec3(0.0f, 1.0f, 0.0f));
 
-	glm::vec3 eulerAngles = glm::eulerAngles(glm::quat_cast(viewMatrix));
+	glm::vec3 eulerAngles = glm::vec3(45, 45, 45);
 
 	cout << eulerAngles.x << endl;
 	cout << eulerAngles.y << endl;
 	cout << eulerAngles.z << endl;
 
-	Entity* wolf = CreateEntity3DWithMesh(glm::vec3(0, 4, 0), 1, eulerAngles, "Meshes/boat_large.obj", "Textures/wall.png");
+	Entity* wolf = CreateEntity3DWithMesh(glm::vec3(0, 16, 0), 1, eulerAngles, "Meshes/boat_large.obj", "Textures/wall.png");
 
 	string map[] = {
 		"########-#", 

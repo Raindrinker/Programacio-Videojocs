@@ -82,7 +82,7 @@
     <LinkIncremental>true</LinkIncremental>
     <IncludePath>./Libraries/include;$(IncludePath)</IncludePath>
     <LibraryPath>./Libraries/lib;$(LibraryPath)</LibraryPath>
-    <ExecutablePath>D:\Github\Programacio-Videojocs\VideogameProgramming\Libraries\bass24\x64;$(ExecutablePath)</ExecutablePath>
+    <ExecutablePath>.\Libraries\bass24\x64;$(ExecutablePath)</ExecutablePath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
@@ -150,6 +150,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AudioPlayer.cpp" />
     <ClCompile Include="Components.cpp" />
     <ClCompile Include="EBO.cpp" />
     <ClCompile Include="FirstPersonCameraScript.cpp" />
@@ -182,6 +183,7 @@
     <None Include="unlit.vert" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AudioPlayer.h" />
     <ClInclude Include="EBO.h" />
     <ClInclude Include="ECS.h" />
     <ClInclude Include="Components.h" />
