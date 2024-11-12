@@ -2,8 +2,8 @@
 #include <windows.h>
 #include <iostream>
 
-//these two headers are already included in the <Windows.h> header
-#pragma comment(lib, "winmm.lib")
+#include "bass.h"
+#pragma comment(lib, "bass.lib") 
 
 using namespace std;
 
@@ -11,6 +11,8 @@ class AudioPlayer
 {
 public:
 
+    static void Init();
+    
     static void PlayAudio(string path, bool loop);
 
 };
