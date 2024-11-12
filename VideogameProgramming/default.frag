@@ -12,7 +12,7 @@ uniform sampler2D texNormals;
 
 uniform vec3 tint = vec3(1.0, 1.0, 1.0);
 
-uniform vec3 lightDirection = vec3(-0.5, -1, 0.0);
+uniform vec3 lightDirection = vec3(5.0, -5.0, 0.0);
 
 void main()
 {
@@ -31,7 +31,7 @@ void main()
 
     FragColor = texColor*directionalLight;
 
-   //FragColor = vec4((normals.z+1.)/2., (normals.z+1.)/2., (normals.z+1.)/2., 1.0f);
+    //FragColor = vec4((normals.z+1.)/2., (normals.z+1.)/2., (normals.z+1.)/2., 1.0f);
    //FragColor = vec4(uvs, 0.0f, 1.0f);
    //FragColor = vec4(color, 1.0f);
 }

@@ -25,6 +25,7 @@
 #include "ECS.h"
 #include "SpawnerScript.h"
 #include "SkyboxScript.h"
+#include "ScriptRotate.h"
 
 using std::cout; 
 using std::endl;
@@ -148,13 +149,17 @@ void SetupWorld() {
 	glm::vec3 direction = glm::vec3(0.0, 1.0, 10.0);
 
 
-	glm::vec3 eulerAngles = glm::vec3(45, 45, 45);
+	glm::vec3 eulerAngles = glm::vec3(45, 0, 0);
 
 	cout << eulerAngles.x << endl;
 	cout << eulerAngles.y << endl;
 	cout << eulerAngles.z << endl;
 
-	Entity* wolf = CreateEntity3DWithMesh(glm::vec3(0, 16, 0), 1, eulerAngles, "Meshes/boat_large.obj", "Textures/wall.png");
+
+	Entity* wolf = CreateEntity3DWithMesh(glm::vec3(0, 16, 0), 3, eulerAngles, "Meshes/cube.obj", "Textures/bricks_albedo.png", "Textures/bricks_normal.png");
+	ScriptRotate* rot = new ScriptRotate(window, world, wolf);
+
+	wolf->assign<ScriptComponent>(scriptManager->AddScript(rot));
 
 	string map[] = {
 		"########-#", 
@@ -186,7 +191,7 @@ void SetupWorld() {
 		for (int j = 0; j < 10; j++) {
 			if (map[i][j] == '#') {
 				Entity* wall = CreateEntity3DWithMesh(glm::vec3(i*4, 2, j*4), 2, glm::vec3(0, 0, 0), "Meshes/cube.obj", "Textures/bricks_albedo.png", "Textures/bricks_normal.png");
-				wall->assign<CubeCollider>(2.1, 2.1, 2.1);
+				wall->assign<CubeCollider>(2.4, 2.4, 2.4);
 			}
 		}
 	}

@@ -23,6 +23,7 @@ class Shader
 		void Delete();
 
 		void SetMatrix4(const char* name, glm::mat4 data);
+		void SetMatrix3(const char* name, glm::mat3 data);
 		void SetVector3f(const char* name, glm::vec3 data);
 		void SetFloat(const char* name, float data);
 

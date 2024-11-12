@@ -32,22 +32,6 @@ void RenderSystem::tick(World* world, float deltaTime)
         rend.DrawSkybox(mesh, texture, proj, cam.get());
 
     });
-    
-    glDisable(GL_CULL_FACE);
-    world->each<Sprite>([&](Entity* ent, ComponentHandle<Sprite> sprite) {
-
-        ComponentHandle<Transform2D> transform = ent->get<Transform2D>();
-
-        Texture texture = textureManager.GetTexture(sprite->filepath);
-           
-        if (sprite->autoSize) {
-            rend.DrawSprite(texture, projection, transform->position, texture.GetSize(), transform->rotation, sprite->color, sprite->shaderName);
-        }
-        else {
-            rend.DrawSprite(texture, projection, transform->position, sprite->size, transform->rotation, sprite->color, sprite->shaderName);
-        }
-
-    });
 
     glEnable(GL_CULL_FACE);
     world->each<MeshComponent>([&](Entity* ent, ComponentHandle<MeshComponent> meshComp) {
@@ -64,6 +48,22 @@ void RenderSystem::tick(World* world, float deltaTime)
         ComponentHandle<Camera> cam = camera->get<Camera>();
 
         rend.DrawMesh(mesh, texture, proj, transform->position, transform->scale, transform->rotation, cam.get(), normalsTexture, meshComp->shaderName);
+
+    });
+
+    glDisable(GL_CULL_FACE);
+    world->each<Sprite>([&](Entity* ent, ComponentHandle<Sprite> sprite) {
+
+        ComponentHandle<Transform2D> transform = ent->get<Transform2D>();
+
+        Texture texture = textureManager.GetTexture(sprite->filepath);
+
+        if (sprite->autoSize) {
+            rend.DrawSprite(texture, projection, transform->position, texture.GetSize(), transform->rotation, sprite->color, sprite->shaderName);
+        }
+        else {
+            rend.DrawSprite(texture, projection, transform->position, sprite->size, transform->rotation, sprite->color, sprite->shaderName);
+        }
 
     });
 

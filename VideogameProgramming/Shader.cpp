@@ -74,6 +74,14 @@ void Shader::SetMatrix4(const char* name, glm::mat4 data) {
 	glUniformMatrix4fv(loc, 1, GL_FALSE, glm::value_ptr(data));
 
 }
+
+void Shader::SetMatrix3(const char* name, glm::mat3 data) {
+
+	int loc = glGetUniformLocation(ID, name);
+	glUniformMatrix3fv(loc, 1, GL_FALSE, glm::value_ptr(data));
+
+}
+
 void Shader::SetVector3f(const char* name, glm::vec3 data) {
 
 	int loc = glGetUniformLocation(ID, name);

@@ -120,6 +120,7 @@ void Renderer::DrawMesh(Mesh& mesh, Texture& texture, glm::mat4 projection, glm:
     shader->SetMatrix4("model", model);
     shader->SetMatrix4("view", view);
     shader->SetMatrix4("proj", proj);
+    shader->SetMatrix3("normalMatrix", transpose(inverse(view)));
 
 
     glActiveTexture(GL_TEXTURE0 + 0);

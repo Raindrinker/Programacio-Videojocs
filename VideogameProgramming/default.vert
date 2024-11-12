@@ -14,6 +14,7 @@ uniform float scale = 1.0;
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 proj;
+uniform mat3 normalMatrix;
 
 void main()
 {
@@ -25,5 +26,5 @@ void main()
    TBN = mat3(T, B, N);
 
    uvs = aTex;
-   normals = aNormals;
+   normals = normalMatrix * aNormals;
 }
