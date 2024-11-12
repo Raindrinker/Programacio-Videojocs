@@ -20,6 +20,7 @@
 #include "ScriptManager.h"
 #include "FirstPersonCameraScript.h"
 #include "Script.h"
+#include "AudioPlayer.h"
 
 #include "ECS.h"
 #include "SpawnerScript.h"
@@ -208,6 +209,8 @@ int main() {
 
 	float dt = 0;
 	float time = clock();
+
+	AudioPlayer::PlayAudio("./Audio/industrious_ferret.wav", false);
 
 	//Program core loop
 	while (!glfwWindowShouldClose(window)) {
